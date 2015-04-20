@@ -4,13 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.ButtonGroup;
 import java.awt.Dimension;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class OptionWindow extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	public OptionWindow() {
-		setFocusTraversalPolicyProvider(true);
 		setPreferredSize(new Dimension(400, 300));
 		setMinimumSize(new Dimension(500, 300));
 		getContentPane().setPreferredSize(new Dimension(400, 200));
@@ -57,6 +61,17 @@ public class OptionWindow extends JFrame {
 		buttonGroup_1.add(set_numeric);
 		set_numeric.setBounds(300, 131, 109, 23);
 		getContentPane().add(set_numeric);
+		
+		JButton play_button = new JButton("Graj!");
+		play_button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+		});
+		
+		play_button.setBounds(186, 224, 91, 23);
+		getContentPane().add(play_button);
 		
 	}
 }
