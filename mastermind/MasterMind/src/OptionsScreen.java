@@ -31,7 +31,6 @@ public class OptionsScreen extends Window {
 		option_left.addItem("5 znaków 12 prób");
 		option_left.addItem("6 znaków 15 prób");
 		option_left.addItem("x znaków y prób");
-		option_left.setSelectedItem(1);
 		leftPanel.addComponent(option_left);
 		//addComponent(option_left);
 		option_right.addItem("kolory");
@@ -52,6 +51,15 @@ public class OptionsScreen extends Window {
                 	close();
                 }
             });
+        Button startButton = new Button("Zacznij", new Action() {
+            @Override
+            public void doAction()  {
+            	MainMenu menu = new MainMenu();
+            	getOwner().showWindow(menu, GUIScreen.Position.CENTER);
+            	close();
+            }
+        });
+        buttonPanel.addComponent(startButton);
         buttonPanel.addComponent(new EmptySpace(1, 1), LinearLayout.GROWS_HORIZONTALLY);
         buttonPanel.addComponent(exitButton);
         mainPanel.addComponent(optionPanel);
