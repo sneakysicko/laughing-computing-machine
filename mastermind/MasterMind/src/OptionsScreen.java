@@ -46,9 +46,7 @@ public class OptionsScreen extends Window {
         Button exitButton = new Button("Wyjście", new Action() {
                 @Override
                 public void doAction()  {
-                	MainMenu menu = new MainMenu();
-                	getOwner().showWindow(menu, GUIScreen.Position.CENTER);
-                	close();
+                	getOwner().getScreen().stopScreen();
                 }
             });
         Button startButton = new Button("Zacznij", new Action() {

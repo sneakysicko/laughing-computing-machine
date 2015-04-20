@@ -12,8 +12,11 @@ import com.googlecode.lanterna.input.Key.Kind;
 public class MasterMind {
 	
 	public static void main(String[] args) {
-		 Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
-		  GUIScreen textGUI = TerminalFacade.createGUIScreen();
+		// Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
+		Terminal terminal = new SwingTerminal();
+		Screen screen = new Screen(terminal);
+		//GUIScreen textGUI = TerminalFacade.createGUIScreen();
+		GUIScreen textGUI = new GUIScreen(screen);
 		    if(textGUI == null) {
 		        System.err.println("Couldn't allocate a terminal!");
 		        return;
@@ -21,8 +24,9 @@ public class MasterMind {
 		    textGUI.getScreen().startScreen();
 		    textGUI.setTitle("Mastermind");
 
-		  MainMenu menu = new MainMenu();
-		  textGUI.showWindow(menu, GUIScreen.Position.CENTER);
-		    //textGUI.getScreen().stopScreen();
+		  //MainMenu menu = new MainMenu();
+		    OptionsScreen options = new OptionsScreen();
+		  textGUI.showWindow(options, GUIScreen.Position.CENTER);
+		    screen.stopScreen();
 	}
 }
