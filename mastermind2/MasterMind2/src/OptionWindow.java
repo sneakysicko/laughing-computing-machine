@@ -3,16 +3,26 @@ import javax.swing.JRadioButton;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.ButtonGroup;
+import java.awt.Dimension;
 
 
 public class OptionWindow extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	public OptionWindow() {
+		setFocusTraversalPolicyProvider(true);
+		setPreferredSize(new Dimension(400, 300));
+		setMinimumSize(new Dimension(500, 300));
+		getContentPane().setPreferredSize(new Dimension(400, 200));
+		getContentPane().setMinimumSize(new Dimension(400, 200));
+		getContentPane().setSize(new Dimension(600, 200));
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("MasterMind - konfiguracja");
 		getContentPane().setLayout(null);
 		
 		JRadioButton option_easy = new JRadioButton("4 znaki  \r\n9 pr\u00F3b");
+		option_easy.setSelected(true);
 		buttonGroup.add(option_easy);
 		option_easy.setBounds(26, 56, 109, 23);
 		getContentPane().add(option_easy);
@@ -29,10 +39,11 @@ public class OptionWindow extends JFrame {
 		
 		JRadioButton option_custom = new JRadioButton("x znak\u00F3w y pr\u00F3b");
 		buttonGroup.add(option_custom);
-		option_custom.setBounds(26, 165, 109, 23);
+		option_custom.setBounds(26, 165, 141, 23);
 		getContentPane().add(option_custom);
 		
 		JRadioButton set_colors = new JRadioButton("Kolory");
+		set_colors.setSelected(true);
 		buttonGroup_1.add(set_colors);
 		set_colors.setBounds(300, 56, 109, 23);
 		getContentPane().add(set_colors);
