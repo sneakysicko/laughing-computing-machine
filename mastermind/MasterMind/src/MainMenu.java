@@ -1,4 +1,5 @@
 import com.googlecode.lanterna.gui.Action;
+import com.googlecode.lanterna.gui.GUIScreen;
 import com.googlecode.lanterna.gui.Window;
 import com.googlecode.lanterna.gui.component.Button;
 import com.googlecode.lanterna.gui.dialog.MessageBox;
@@ -12,7 +13,9 @@ public class MainMenu extends Window{
         addComponent(new Button("Konfiguracja", new Action() {
                 @Override
                 public void doAction() {
-                   MessageBox.showMessageBox(getOwner(), "Hello", "You selected the button with an action attached to it!");
+                	OptionsScreen options = new OptionsScreen();
+          		  	getOwner().showWindow(options, GUIScreen.Position.CENTER);
+          		  	close();
                 }
             }));
         addComponent(new Button("Wyjście", new Action(){
