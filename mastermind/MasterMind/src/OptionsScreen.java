@@ -54,8 +54,8 @@ public class OptionsScreen extends Window {
         Button startButton = new Button("Zacznij", new Action() {
             @Override
             public void doAction()  {
-            	MainMenu menu = new MainMenu();
-            	getOwner().showWindow(menu, GUIScreen.Position.CENTER);
+            	GameScreen game = new GameScreen();
+            	getOwner().showWindow(game, GUIScreen.Position.CENTER);
             	close();
             }
         });
