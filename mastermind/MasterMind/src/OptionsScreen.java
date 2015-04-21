@@ -48,6 +48,7 @@ public class OptionsScreen extends Window {
                 @Override
                 public void doAction()  {
                 	getOwner().getScreen().stopScreen();
+                	System.exit(0);
                 }
             });
         Button startButton = new Button("Zacznij", new Action() {
@@ -81,7 +82,7 @@ public class OptionsScreen extends Window {
             	GameScreen game = new GameScreen();
             	getOwner().showWindow(game, GUIScreen.Position.CENTER);
             	close();
-            	System.exit(0);
+            	
             }
         });
         buttonPanel.addComponent(startButton);
