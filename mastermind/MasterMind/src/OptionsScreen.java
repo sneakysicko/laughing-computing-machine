@@ -9,6 +9,7 @@ import com.googlecode.lanterna.gui.component.EmptySpace;
 import com.googlecode.lanterna.gui.component.Panel;
 import com.googlecode.lanterna.gui.component.RadioCheckBoxList;
 import com.googlecode.lanterna.gui.dialog.MessageBox;
+import com.googlecode.lanterna.gui.dialog.TextInputDialog;
 import com.googlecode.lanterna.gui.layout.LinearLayout;
 
 public class OptionsScreen extends Window {
@@ -65,12 +66,22 @@ public class OptionsScreen extends Window {
             		SettingsContainer.chars=6;
             	}
             	if(option_left.getCheckedItemIndex()==3){
-            		SettingsContainer.tries=9;
-            		SettingsContainer.chars=4;
+            		TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość znaków","Podaj ilość znaków od 4 (minimum) do " + SettingsContainer.MAXNUMBEROFZGADYWANKASSYMBOLAS + " (maksimum)","Wpisz tutaj liczbę");
+            		TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość znaków od 5 (minimum) do " + SettingsContainer.MAXNUMBEROFZGADYWANKASPROBAS + " (maksimum)","Wpisz tutaj liczbę");
+            	}
+            	if(option_right.getCheckedItemIndex()==0){
+            		SettingsContainer.ctype=1;
+            	}
+            	if(option_right.getCheckedItemIndex()==1){
+            		SettingsContainer.ctype=2;
+            	}
+            	if(option_right.getCheckedItemIndex()==2){
+            		SettingsContainer.ctype=3;
             	}
             	GameScreen game = new GameScreen();
             	getOwner().showWindow(game, GUIScreen.Position.CENTER);
             	close();
+            	System.exit(0);
             }
         });
         buttonPanel.addComponent(startButton);
