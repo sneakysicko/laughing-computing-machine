@@ -65,8 +65,35 @@ public class OptionWindow extends JFrame {
 		JButton play_button = new JButton("Graj!");
 		play_button.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
+			public void mouseClicked(MouseEvent e) {
+				if(option_easy.isSelected()){
+					SettingsContainer.chars = 4;
+					SettingsContainer.tries= 9;
+				}
+				if(option_normal.isSelected()){
+					SettingsContainer.chars = 5;
+					SettingsContainer.tries= 12;
+				}
+				if(option_hard.isSelected()){
+					SettingsContainer.chars = 6;
+					SettingsContainer.tries= 15;
+				}
+				if(option_custom.isSelected()){
+					CustomWindow c_win = new CustomWindow();
+					c_win.setVisible(true);
+				}
+				if(set_colors.isSelected()){
+					SettingsContainer.ctype =1;
+				}
+				if(set_alpha.isSelected()){
+					SettingsContainer.ctype =2;
+				}
+				if(set_numeric.isSelected()){
+					SettingsContainer.ctype =3;
+				}
+				GameWindow game_win = new GameWindow();
+				game_win.setVisible(true);
+				//this.setVisible(false);
 			}
 		});
 		

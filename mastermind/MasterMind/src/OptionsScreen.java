@@ -52,6 +52,22 @@ public class OptionsScreen extends Window {
         Button startButton = new Button("Zacznij", new Action() {
             @Override
             public void doAction()  {
+            	if(option_left.getCheckedItemIndex()==0){
+            		SettingsContainer.tries=9;
+            		SettingsContainer.chars=4;
+            	}
+            	if(option_left.getCheckedItemIndex()==1){
+            		SettingsContainer.tries=12;
+            		SettingsContainer.chars=5;
+            	}
+            	if(option_left.getCheckedItemIndex()==2){
+            		SettingsContainer.tries=15;
+            		SettingsContainer.chars=6;
+            	}
+            	if(option_left.getCheckedItemIndex()==3){
+            		SettingsContainer.tries=9;
+            		SettingsContainer.chars=4;
+            	}
             	GameScreen game = new GameScreen();
             	getOwner().showWindow(game, GUIScreen.Position.CENTER);
             	close();
