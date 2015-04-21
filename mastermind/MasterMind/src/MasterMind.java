@@ -27,7 +27,6 @@ public class MasterMind {
 		  //MainMenu menu = new MainMenu();
 		    OptionsScreen options = new OptionsScreen();
 		  textGUI.showWindow(options, GUIScreen.Position.CENTER);
-		   textGUI.getScreen().stopScreen();
-		    System.exit(0);
+		    screen.stopScreen();
 	}
 }
