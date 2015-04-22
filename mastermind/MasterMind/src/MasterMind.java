@@ -31,7 +31,6 @@ public class MasterMind {
 		    textGUI.showWindow(options, GUIScreen.Position.CENTER);
        	    GameScreen game = new GameScreen();
            	textGUI.showWindow(game, GUIScreen.Position.CENTER);
-            game.play();
 		    textGUI.getScreen().stopScreen();
 		    System.exit(0);
 	}

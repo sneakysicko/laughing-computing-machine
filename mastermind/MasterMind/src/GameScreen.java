@@ -3,6 +3,7 @@ import com.googlecode.lanterna.gui.Action;
 import com.googlecode.lanterna.gui.Border;
 import com.googlecode.lanterna.gui.Component;
 import com.googlecode.lanterna.gui.GUIScreen;
+import com.googlecode.lanterna.gui.Interactable;
 import com.googlecode.lanterna.gui.Window;
 import com.googlecode.lanterna.gui.component.Button;
 import com.googlecode.lanterna.gui.component.CheckBox;
@@ -24,36 +25,42 @@ public class GameScreen extends Window {
         private Action defaultAction = new Action() {
             public void doAction() {
                 ++turnNumber;
-                if(turnNumber == SettingsContainer.tries)
+                if(turnNumber > SettingsContainer.tries)
                     close();
                 else
                     drawNextRow();
             }
-        }
+        };
 
         public SelectableButton(String text) {
-            this(text, defaultAction)
+            super(text);
         }
         
-        public SelectaleButton(String text, Action onPressEvent) {
+        /*public SelectableButton(String text, Action onPressEvent) {
             super(text, onPressEvent);
-        }
+        }*/
 
         @Override
         public Interactable.Result keyboardInteraction(Key key) {
             switch(key.getKind()) {
                 case Enter:
-                    onPressEvent.doAction();
+                    defaultAction.doAction();
                     return Result.EVENT_HANDLED;
 
+                    //Albo NEXT_INTERACTABLE_RIGHT
+                    //Nie ma jednak różnicy w działaniu - zerknąć
+                    //jak kontener przechowuje to gówno
                 case ArrowRight:
                 case Tab:
-                    return Result.NEXT_INTERACTABLE_RIGHT;
+                    return Result.NEXT_INTERACTABLE_DOWN;
 
+                    //Albo PREVIOUS_INTERACTABLE_LEFT
+                    //Uwaga jak w poprzednim przypadku
                 case ArrowLeft:
                 case ReverseTab:
-                    return Result.NEXT_INTERACTABLE_LEFT;
-                    //KONCZ
+                    return Result.PREVIOUS_INTERACTABLE_UP;
+                default:
+                    return Result.EVENT_NOT_HANDLED;
             }
         }
     }
@@ -97,7 +104,7 @@ public class GameScreen extends Window {
     
     public void drawNextRow() {
         for(int j = 0; j < SettingsContainer.chars; ++j)
-            brow[j] = new Button("1");
+            brow[j] = new SelectableButton("1");
         Component one = new Label(new String("" + turnNumber + "."));
         ltable.addRow(one);
         table.addRow(brow);
