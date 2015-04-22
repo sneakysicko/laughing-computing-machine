@@ -81,7 +81,10 @@ public class OptionsScreen extends Window {
             	}
             	GameScreen game = new GameScreen();
             	getOwner().showWindow(game, GUIScreen.Position.CENTER);
+            	
             	close();
+            	MasterMind.screen.refresh();
+            	//game.play();
             	
             }
         });

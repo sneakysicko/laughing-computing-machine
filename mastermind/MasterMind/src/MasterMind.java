@@ -10,13 +10,15 @@ import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.swing.SwingTerminal;
 import com.googlecode.lanterna.input.Key.Kind;
 public class MasterMind {
-	
+	static Terminal terminal;
+	static GUIScreen textGUI;
+	static Screen screen;
 	public static void main(String[] args) {
 		// Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
-		Terminal terminal = new SwingTerminal();
-		Screen screen = new Screen(terminal);
+		terminal = new SwingTerminal();
+		screen = new Screen(terminal);
 		//GUIScreen textGUI = TerminalFacade.createGUIScreen();
-		GUIScreen textGUI = new GUIScreen(screen);
+		textGUI = new GUIScreen(screen);
 		    if(textGUI == null) {
 		        System.err.println("Couldn't allocate a terminal!");
 		        return;
