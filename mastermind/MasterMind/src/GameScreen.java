@@ -52,6 +52,9 @@ public class GameScreen extends Window {
 		mainPanel.addComponent(tooltip);
 		addComponent(mainPanel);
 		
+	}
+
+	void play(){
 		//Check jest warunkiem żeby pętla sterowania się nie przerywała.
 				boolean check = true;
 
@@ -99,9 +102,6 @@ public class GameScreen extends Window {
 					rtable.addRow(two);
 					MasterMind.screen.refresh();
 				}
-	}
-
-	void play(){
 		
 	}
 }

@@ -79,11 +79,8 @@ public class OptionsScreen extends Window {
             	if(option_right.getCheckedItemIndex()==2){
             		SettingsContainer.ctype=3;
             	}
-            	GameScreen game = new GameScreen();
-            	getOwner().showWindow(game, GUIScreen.Position.CENTER);
-            	
             	close();
-            	MasterMind.screen.refresh();
+            	
             	//game.play();
             	
             }

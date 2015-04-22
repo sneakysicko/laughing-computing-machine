@@ -28,8 +28,11 @@ public class MasterMind {
 
 		  //MainMenu menu = new MainMenu();
 		    OptionsScreen options = new OptionsScreen();
-		  textGUI.showWindow(options, GUIScreen.Position.CENTER);
-		   textGUI.getScreen().stopScreen();
+		    textGUI.showWindow(options, GUIScreen.Position.CENTER);
+       	    GameScreen game = new GameScreen();
+           	textGUI.showWindow(game, GUIScreen.Position.CENTER);
+            game.play();
+		    textGUI.getScreen().stopScreen();
 		    System.exit(0);
 	}
 }
