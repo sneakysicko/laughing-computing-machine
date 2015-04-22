@@ -22,6 +22,7 @@ import com.googlecode.lanterna.input.Key.Kind;
 
 public class GameScreen extends Window {
     private class SelectableButton extends Button {
+        private boolean usable;
         private Action defaultAction = new Action() {
             public void doAction() {
                 ++turnNumber;
@@ -32,8 +33,13 @@ public class GameScreen extends Window {
             }
         };
 
-        public SelectableButton(String text) {
+        public SelectableButton(String text, boolean usable) {
             super(text);
+            this.usable = usable;
+        }
+
+        public void changeUsability(boolean newUsability) {
+            usable = newUsability;
         }
         
         /*public SelectableButton(String text, Action onPressEvent) {
@@ -42,26 +48,30 @@ public class GameScreen extends Window {
 
         @Override
         public Interactable.Result keyboardInteraction(Key key) {
-            switch(key.getKind()) {
-                case Enter:
-                    defaultAction.doAction();
-                    return Result.EVENT_HANDLED;
+            if(usable) {
+                switch(key.getKind()) {
+                    case Enter:
+                        defaultAction.doAction();
+                        return Result.EVENT_HANDLED;
 
-                    //Albo NEXT_INTERACTABLE_RIGHT
-                    //Nie ma jednak różnicy w działaniu - zerknąć
-                    //jak kontener przechowuje to gówno
-                case ArrowRight:
-                case Tab:
-                    return Result.NEXT_INTERACTABLE_DOWN;
+                        //Albo NEXT_INTERACTABLE_DOWN
+                        //Nie ma jednak różnicy w działaniu - zerknąć
+                        //jak kontener przechowuje to gówno
+                    case ArrowRight:
+                    case Tab:
+                        return Result.NEXT_INTERACTABLE_RIGHT;
 
-                    //Albo PREVIOUS_INTERACTABLE_LEFT
-                    //Uwaga jak w poprzednim przypadku
-                case ArrowLeft:
-                case ReverseTab:
-                    return Result.PREVIOUS_INTERACTABLE_UP;
-                default:
-                    return Result.EVENT_NOT_HANDLED;
+                        //Albo PREVIOUS_INTERACTABLE_UP
+                        //Uwaga jak w poprzednim przypadku
+                    case ArrowLeft:
+                    case ReverseTab:
+                        return Result.PREVIOUS_INTERACTABLE_LEFT;
+                    default:
+                        return Result.EVENT_NOT_HANDLED;
+                }
             }
+            else
+                return Result.EVENT_NOT_HANDLED;
         }
     }
 
@@ -76,7 +86,7 @@ public class GameScreen extends Window {
 	Table ltable = new Table(1);
 	Table rtable = new Table(1);
 	//brow (buttonrow) to tablica komponentów - w tym wypadku guzików
-	Component [] brow = new Component[SettingsContainer.chars];
+	SelectableButton [] brow = new SelectableButton[SettingsContainer.chars];
 
 	//Placeholdery
 	Component two = new Label("tyst");
@@ -103,14 +113,18 @@ public class GameScreen extends Window {
 	}
     
     public void drawNextRow() {
+        if(turnNumber > 1) {
+            for(int j = 0; j < SettingsContainer.chars; ++j)
+                brow[j].changeUsability(false);
+        }
         for(int j = 0; j < SettingsContainer.chars; ++j)
-            brow[j] = new SelectableButton("1");
+            brow[j] = new SelectableButton("1",true);
         Component one = new Label(new String("" + turnNumber + "."));
         ltable.addRow(one);
         table.addRow(brow);
     }
 
-	void play(){
+	/*void play(){
 		//Check jest warunkiem żeby pętla sterowania się nie przerywała.
 				boolean check = true;
 
@@ -159,5 +173,5 @@ public class GameScreen extends Window {
                     MasterMind.textGUI.invalidate();
 				}
 		
-	}
+	}*/
 }
