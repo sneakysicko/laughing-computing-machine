@@ -20,6 +20,43 @@ import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.Key.Kind;
 
 public class GameScreen extends Window {
+    private class SelectableButton extends Button {
+        private Action defaultAction = new Action() {
+            public void doAction() {
+                ++turnNumber;
+                if(turnNumber == SettingsContainer.tries)
+                    close();
+                else
+                    drawNextRow();
+            }
+        }
+
+        public SelectableButton(String text) {
+            this(text, defaultAction)
+        }
+        
+        public SelectaleButton(String text, Action onPressEvent) {
+            super(text, onPressEvent);
+        }
+
+        @Override
+        public Interactable.Result keyboardInteraction(Key key) {
+            switch(key.getKind()) {
+                case Enter:
+                    onPressEvent.doAction();
+                    return Result.EVENT_HANDLED;
+
+                case ArrowRight:
+                case Tab:
+                    return Result.NEXT_INTERACTABLE_RIGHT;
+
+                case ArrowLeft:
+                case ReverseTab:
+                    return Result.NEXT_INTERACTABLE_LEFT;
+                    //KONCZ
+            }
+        }
+    }
 
 	//Stworzenie dwóch paneli - głównego na wszystko i table na ogólny obszar gry.
 	Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
@@ -39,6 +76,9 @@ public class GameScreen extends Window {
 
 	//Tooltip mówi nam o możliwościach programu
 	TextArea tooltip = new TextArea("Wciśnij klawisz 'F1' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
+
+    //zmienna przechowująca numer tury
+    int turnNumber = 1;
 	
 	GameScreen(){
 		super("Gra");
@@ -51,8 +91,17 @@ public class GameScreen extends Window {
 		mainPanel.addComponent(tablePanel);
 		mainPanel.addComponent(tooltip);
 		addComponent(mainPanel);
-		
+
+        drawNextRow();
 	}
+    
+    public void drawNextRow() {
+        for(int j = 0; j < SettingsContainer.chars; ++j)
+            brow[j] = new Button("1");
+        Component one = new Label(new String("" + turnNumber + "."));
+        ltable.addRow(one);
+        table.addRow(brow);
+    }
 
 	void play(){
 		//Check jest warunkiem żeby pętla sterowania się nie przerywała.
@@ -70,7 +119,7 @@ public class GameScreen extends Window {
 					ltable.addRow(one);
 					table.addRow(brow);
 
-					MasterMind.screen.refresh();
+                    MasterMind.textGUI.invalidate();
 					//Pętla sterująca, ma odpowiadać za sterowanie itd.
 
 					while(check){
@@ -100,7 +149,7 @@ public class GameScreen extends Window {
 					check = true;
 
 					rtable.addRow(two);
-					MasterMind.screen.refresh();
+                    MasterMind.textGUI.invalidate();
 				}
 		
 	}
