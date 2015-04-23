@@ -48,7 +48,7 @@ public class GameScreen extends Window {
 
         @Override
         public Interactable.Result keyboardInteraction(Key key) {
-            if(usable) {
+           // if(usable) {
                 switch(key.getKind()) {
                     case Enter:
                         defaultAction.doAction();
@@ -63,15 +63,17 @@ public class GameScreen extends Window {
 
                         //Albo PREVIOUS_INTERACTABLE_UP
                         //Uwaga jak w poprzednim przypadku
+                    case Escape:
+                    	close();
                     case ArrowLeft:
                     case ReverseTab:
                         return Result.PREVIOUS_INTERACTABLE_LEFT;
                     default:
                         return Result.EVENT_NOT_HANDLED;
                 }
-            }
-            else
-                return Result.EVENT_NOT_HANDLED;
+           // }
+           // else
+            //    return Result.EVENT_NOT_HANDLED;
         }
     }
 
@@ -92,7 +94,7 @@ public class GameScreen extends Window {
 	Component two = new Label("tyst");
 
 	//Tooltip mówi nam o możliwościach programu
-	TextArea tooltip = new TextArea("Wciśnij klawisz 'F1' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
+	Component tooltip = new Label("Wciśnij klawisz 'F1' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
 
     //zmienna przechowująca numer tury
     int turnNumber = 1;
