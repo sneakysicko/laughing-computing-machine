@@ -94,7 +94,7 @@ public class GameScreen extends Window {
 	Component two = new Label("tyst");
 
 	//Tooltip mówi nam o możliwościach programu
-	Component tooltip = new TextArea("Wciśnij klawisz 'F1' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
+	Component tooltip = new Label("Wciśnij klawisz 'F1' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
 
     //zmienna przechowująca numer tury
     int turnNumber = 1;
