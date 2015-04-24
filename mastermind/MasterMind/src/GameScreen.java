@@ -25,17 +25,22 @@ public class GameScreen extends Window {
         private boolean usable;
         
   
-        public void moveRight() {
-        	if(((SettingsContainer.currentComponent+1)>=0) && ((SettingsContainer.currentComponent+1)<=(SettingsContainer.MAXNUMBEROFZGADYWANKASSYMBOLAS-1))){
+        public void moveRight() {/*
+        	if(((SettingsContainer.currentComponent+1)>=0) 
+                    && ((SettingsContainer.currentComponent+1)<=(SettingsContainer.MAXNUMBEROFZGADYWANKASSYMBOLAS-1))){
         	setFocus(brow[SettingsContainer.currentComponent+1]);
         	SettingsContainer.currentComponent++;
-        	}
+        	}*/
+            SettingsContainer.currentComponent = (SettingsContainer.currentComponent+1)%SettingsContainer.chars;
+            setFocus(brow[SettingsContainer.currentComponent]);
         }
-        public void moveLeft(){
+        public void moveLeft(){/*
         	if(((SettingsContainer.currentComponent-1)>=0) && ((SettingsContainer.currentComponent-1)<=(SettingsContainer.MAXNUMBEROFZGADYWANKASSYMBOLAS-1))){
         	setFocus(brow[SettingsContainer.currentComponent-1]);
         	SettingsContainer.currentComponent--;
-        	}
+        	}*/
+            SettingsContainer.currentComponent = (SettingsContainer.currentComponent-1+SettingsContainer.chars)%SettingsContainer.chars;
+            setFocus(brow[SettingsContainer.currentComponent]);
         }
           
         private Action leftAction = new Action() {

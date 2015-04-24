@@ -69,8 +69,8 @@ public class OptionsScreen extends Window {
 				if(option_left.getCheckedItemIndex()==3){
 					boolean test = true;
 					while(test){
-						int new_chars=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość znaków","Podaj ilość znaków od 4 (minimum) do " + SettingsContainer.MAXNUMBEROFZGADYWANKASSYMBOLAS + " (maksimum)",""));
-						if(new_chars>=4 && new_chars<=SettingsContainer.MAXNUMBEROFZGADYWANKASSYMBOLAS){
+						int new_chars=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość znaków","Podaj ilość znaków od 4 (minimum) do " + SettingsContainer.charsLimit + " (maksimum)",""));
+						if(new_chars>=4 && new_chars<=SettingsContainer.charsLimit){
 							test = false;
 							SettingsContainer.chars=new_chars;
 
@@ -78,8 +78,8 @@ public class OptionsScreen extends Window {
 					}
 					test = true;
 					while(test){
-						int new_tries=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.MAXNUMBEROFZGADYWANKASPROBAS + " (maksimum)",""));
-						if(new_tries>=4 && new_tries<=SettingsContainer.MAXNUMBEROFZGADYWANKASPROBAS){
+						int new_tries=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.triesLimit + " (maksimum)",""));
+						if(new_tries>=4 && new_tries<=SettingsContainer.triesLimit){
 							test = false;
 							SettingsContainer.tries=new_tries;
 						}
