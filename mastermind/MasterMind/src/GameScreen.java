@@ -61,6 +61,8 @@ public class GameScreen extends Window {
                     close();
                 else
                     drawNextRow();
+                	setFocus(brow[0]);
+                	SettingsContainer.currentComponent = 0;
             }
         };
 
