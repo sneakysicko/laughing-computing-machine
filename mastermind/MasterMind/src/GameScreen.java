@@ -21,6 +21,8 @@ import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.ACS;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.Key.Kind;
+import java.util.Random;
+
 
 public class GameScreen extends Window {
 	private class SelectableButton extends Button {
@@ -150,6 +152,13 @@ public class GameScreen extends Window {
 		ltable.addRow(one);
 		table.addRow(brow);
 	}
+	
+	private int[] code = new int[SettingsContainer.chars];
+	public void setRandomGoal(){
+		Random generator = new Random();
+		for (int i = 0;i<SettingsContainer.chars;++i){
+			code[i] = generator.nextInt(SettingsContainer.chars+1);
+			
 
 
 }
