@@ -6,4 +6,5 @@ public class SettingsContainer {
 	public static final int MAXNUMBEROFZGADYWANKASSYMBOLAS = 9; //Nazwy zmiennych by Maciek
 	public static final int MAXNUMBEROFZGADYWANKASPROBAS = 15; //Nazwy zmiennych by Maciek
 	public static int turnNumber = 1;
+	public static int currentComponent = 0;
 }

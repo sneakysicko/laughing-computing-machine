@@ -24,30 +24,36 @@ public class GameScreen extends Window {
     private class SelectableButton extends Button {
         private boolean usable;
         
-  /*
-        public void moveLeft() {
-        	setFocus(this,Interactable.FocusChangeDirection.LEFT);
+  
+        public void moveRight() {
+        	if(((SettingsContainer.currentComponent+1)>=0) && ((SettingsContainer.currentComponent+1)<=(SettingsContainer.MAXNUMBEROFZGADYWANKASSYMBOLAS-1))){
+        	setFocus(brow[SettingsContainer.currentComponent+1]);
+        	SettingsContainer.currentComponent++;
+        	}
         }
-        public void moveRight(){
-        	setFocus(this,Interactable.FocusChangeDirection.RIGHT);
+        public void moveLeft(){
+        	if(((SettingsContainer.currentComponent-1)>=0) && ((SettingsContainer.currentComponent-1)<=(SettingsContainer.MAXNUMBEROFZGADYWANKASSYMBOLAS-1))){
+        	setFocus(brow[SettingsContainer.currentComponent-1]);
+        	SettingsContainer.currentComponent--;
+        	}
         }
-        
+          
         private Action leftAction = new Action() {
         	public void doAction() {
-        	for(int i=0;i<SettingsContainer.turnNumber;i++){
+        	//for(int i=0;i<SettingsContainer.turnNumber;i++){
         		moveLeft();
-        	}
+        	//}
         	} 
         };
         
         private Action rightAction = new Action() {
         	public void doAction() {
-        	for(int i=0;i<SettingsContainer.turnNumber;i++){
+        	//for(int i=0;i<SettingsContainer.turnNumber;i++){
         		moveRight();
-        	}
+        	//}
         	} 
         };
-        */
+        
         private Action defaultAction = new Action() {
             public void doAction() {
                 ++SettingsContainer.turnNumber;
@@ -83,21 +89,24 @@ public class GameScreen extends Window {
                         //Albo NEXT_INTERACTABLE_DOWN
                         //Nie ma jednak różnicy w działaniu - zerknąć
                         //jak kontener przechowuje to gówno
-                    case ArrowRight:
-                    case Tab:
-                    	//rightAction.doAction();
-                    	//return Result.EVENT_HANDLED;
-                    	 return Result.NEXT_INTERACTABLE_RIGHT;
+                   case ArrowRight:
+                   case Tab:
+                	   //setFocus(table.nextFocus(this));
+                	   
+                    	rightAction.doAction();
+                    	return Result.EVENT_HANDLED;
+                    	// return Result.NEXT_INTERACTABLE_RIGHT;
                     	
                         //Albo PREVIOUS_INTERACTABLE_UP
                         //Uwaga jak w poprzednim przypadku
                     case Escape:
                     	close();
-                    case ArrowLeft:
-                    case ReverseTab:
-                    	//leftAction.doAction();
-                    	//return Result.EVENT_HANDLED;
-                    	return Result.PREVIOUS_INTERACTABLE_LEFT;
+                   case ArrowLeft:
+                   case ReverseTab:
+                	   //setFocus(table.previousFocus(this));
+                    	leftAction.doAction();
+                    	return Result.EVENT_HANDLED;
+                    	//return Result.PREVIOUS_INTERACTABLE_LEFT;
                     default:
                         return Result.EVENT_NOT_HANDLED;
                 }
@@ -140,7 +149,7 @@ public class GameScreen extends Window {
 		mainPanel.addComponent(tablePanel);
 		mainPanel.addComponent(tooltip);
 		addComponent(mainPanel);
-
+		//table.addShortcut(Key.Kind.ArrowLeft, );
         drawNextRow();
         setFocus(brow[0]);
         
