@@ -23,10 +23,35 @@ import com.googlecode.lanterna.input.Key.Kind;
 public class GameScreen extends Window {
     private class SelectableButton extends Button {
         private boolean usable;
+        
+  /*
+        public void moveLeft() {
+        	setFocus(this,Interactable.FocusChangeDirection.LEFT);
+        }
+        public void moveRight(){
+        	setFocus(this,Interactable.FocusChangeDirection.RIGHT);
+        }
+        
+        private Action leftAction = new Action() {
+        	public void doAction() {
+        	for(int i=0;i<SettingsContainer.turnNumber;i++){
+        		moveLeft();
+        	}
+        	} 
+        };
+        
+        private Action rightAction = new Action() {
+        	public void doAction() {
+        	for(int i=0;i<SettingsContainer.turnNumber;i++){
+        		moveRight();
+        	}
+        	} 
+        };
+        */
         private Action defaultAction = new Action() {
             public void doAction() {
-                ++turnNumber;
-                if(turnNumber > SettingsContainer.tries)
+                ++SettingsContainer.turnNumber;
+                if(SettingsContainer.turnNumber > SettingsContainer.tries)
                     close();
                 else
                     drawNextRow();
@@ -49,6 +74,7 @@ public class GameScreen extends Window {
         @Override
         public Interactable.Result keyboardInteraction(Key key) {
            // if(usable) {
+        	//Interactable.Result temp = null;
                 switch(key.getKind()) {
                     case Enter:
                         defaultAction.doAction();
@@ -59,15 +85,19 @@ public class GameScreen extends Window {
                         //jak kontener przechowuje to gówno
                     case ArrowRight:
                     case Tab:
-                        return Result.NEXT_INTERACTABLE_RIGHT;
-
+                    	//rightAction.doAction();
+                    	//return Result.EVENT_HANDLED;
+                    	 return Result.NEXT_INTERACTABLE_RIGHT;
+                    	
                         //Albo PREVIOUS_INTERACTABLE_UP
                         //Uwaga jak w poprzednim przypadku
                     case Escape:
                     	close();
                     case ArrowLeft:
                     case ReverseTab:
-                        return Result.PREVIOUS_INTERACTABLE_LEFT;
+                    	//leftAction.doAction();
+                    	//return Result.EVENT_HANDLED;
+                    	return Result.PREVIOUS_INTERACTABLE_LEFT;
                     default:
                         return Result.EVENT_NOT_HANDLED;
                 }
@@ -97,7 +127,7 @@ public class GameScreen extends Window {
 	Component tooltip = new Label("Wciśnij klawisz 'F1' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
 
     //zmienna przechowująca numer tury
-    int turnNumber = 1;
+   
 	
 	GameScreen(){
 		super("Gra");
@@ -112,16 +142,19 @@ public class GameScreen extends Window {
 		addComponent(mainPanel);
 
         drawNextRow();
+        setFocus(brow[0]);
+        
 	}
     
     public void drawNextRow() {
-        if(turnNumber > 1) {
-            for(int j = 0; j < SettingsContainer.chars; ++j)
+        if(SettingsContainer.turnNumber > 1) {
+            for(int j = 0; j < SettingsContainer.chars; ++j){
                 brow[j].changeUsability(false);
+            }
         }
         for(int j = 0; j < SettingsContainer.chars; ++j)
             brow[j] = new SelectableButton("1",true);
-        Component one = new Label(new String("" + turnNumber + "."));
+        Component one = new Label(new String("" + SettingsContainer.turnNumber + "."));
         ltable.addRow(one);
         table.addRow(brow);
     }
