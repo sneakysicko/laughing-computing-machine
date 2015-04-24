@@ -151,4 +151,4 @@ public class GameScreen extends Window {
 		Component one = new Label(new String("" + SettingsContainer.turnNumber + "."));
 		ltable.addRow(one);
 		table.addRow(brow);
-	}
+	}}
