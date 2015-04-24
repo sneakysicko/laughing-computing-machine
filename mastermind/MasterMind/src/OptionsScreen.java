@@ -86,13 +86,13 @@ public class OptionsScreen extends Window {
 					}
 				}
 				if(option_right.getCheckedItemIndex()==0){
-					SettingsContainer.ctype=1;
+					SettingsContainer.ctype=1; //kolory
 				}
 				if(option_right.getCheckedItemIndex()==1){
-					SettingsContainer.ctype=2;
+					SettingsContainer.ctype=2; //znaki
 				}
 				if(option_right.getCheckedItemIndex()==2){
-					SettingsContainer.ctype=3;
+					SettingsContainer.ctype=3; //cyfry
 				}
 				close();
 
