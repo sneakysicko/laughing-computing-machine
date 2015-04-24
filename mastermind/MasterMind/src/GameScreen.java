@@ -152,13 +152,3 @@ public class GameScreen extends Window {
 		ltable.addRow(one);
 		table.addRow(brow);
 	}
-	
-	private int[] code = new int[SettingsContainer.chars];
-	public void setRandomGoal(){
-		Random generator = new Random();
-		for (int i = 0;i<SettingsContainer.chars;++i){
-			code[i] = generator.nextInt(SettingsContainer.chars+1);
-			
-
-
-}
