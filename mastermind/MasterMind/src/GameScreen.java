@@ -117,18 +117,13 @@ public class GameScreen extends Window {
         	case Escape:
         		close();
         		
-        	/*Problemy sa takie ze :
-        	 * a) Nie moge wykminic czemu focus sie zmienia przy samym wyswietlaniu 
-        	 * b) ArrowUp i Down osobno dzialaja jak trzeba, a jak wrzuce je oba do case
-        	 * to poprawnie dziala tylko ten "nizej" postawiony
-        	 * Chyba ze ja cos zle robie/rozumiem?	
-        	 */
         	case ArrowDown:
-        		DownAction.doAction();	
+        		DownAction.doAction();
+        		return Result.EVENT_HANDLED;
         	case ArrowUp:
         		
         		UpAction.doAction();
-     
+        		return Result.EVENT_HANDLED;
         	case ArrowLeft:
         	
         	
