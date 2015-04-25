@@ -37,7 +37,41 @@ public class GameScreen extends Window {
 			SettingsContainer.currentComponent = (SettingsContainer.currentComponent-1+SettingsContainer.chars)%SettingsContainer.chars;
 			setFocus(brow[SettingsContainer.currentComponent]);
 		}
+		
+		
+		public void moveUp(){
+			SettingsContainer.currentUp++;
+			if (SettingsContainer.currentUp == SettingsContainer.typeNum.length){
+				SettingsContainer.currentUp = 0;}
+			setText(Integer.toString(SettingsContainer.typeNum[SettingsContainer.currentUp]));
+				
+			
+			
+		}
+		
+		public void moveDown(){
+			SettingsContainer.currentUp--;
+			if (SettingsContainer.currentUp <0){
+				SettingsContainer.currentUp = SettingsContainer.typeNum.length-1;}
+			setText(Integer.toString(SettingsContainer.typeNum[SettingsContainer.currentUp]));
+			
+			
+			
+		}
+		
+		private Action UpAction = new Action() {
+			public void doAction() {
+				moveUp();
+			} 
+		};
+		private Action DownAction = new Action() {
+			public void doAction() {
+				moveDown();
+			} 
+		};
 
+		
+		
 		private Action leftAction = new Action() {
 			public void doAction() {
 				moveLeft();
@@ -83,7 +117,22 @@ public class GameScreen extends Window {
         	case Escape:
         		close();
         		
+        	/*Problemy sa takie ze :
+        	 * a) Nie moge wykminic czemu focus sie zmienia przy samym wyswietlaniu 
+        	 * b) ArrowUp i Down osobno dzialaja jak trzeba, a jak wrzuce je oba do case
+        	 * to poprawnie dziala tylko ten "nizej" postawiony
+        	 * Chyba ze ja cos zle robie/rozumiem?	
+        	 */
+        	case ArrowDown:
+        		DownAction.doAction();	
+        	case ArrowUp:
+        		
+        		UpAction.doAction();
+     
         	case ArrowLeft:
+        	
+        	
+        		
         	case ReverseTab:
         		leftAction.doAction();
         		return Result.EVENT_HANDLED;
@@ -151,4 +200,24 @@ public class GameScreen extends Window {
 		Component one = new Label(new String("" + SettingsContainer.turnNumber + "."));
 		ltable.addRow(one);
 		table.addRow(brow);
-	}}
+	}
+	
+	private int[] codes = new int[SettingsContainer.chars];
+	//Ustalenie kodu do zgadniecia
+	public void setRandomGoal(){
+		Random generator = new Random();
+		for (int i=0;i<SettingsContainer.chars;++i){
+			codes[i] = generator.nextInt(SettingsContainer.chars+1);
+			
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+}
