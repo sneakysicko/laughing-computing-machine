@@ -21,7 +21,11 @@ import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.ACS;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.Key.Kind;
+
+import java.nio.channels.SeekableByteChannel;
 import java.util.Random;
+
+import javax.swing.plaf.basic.BasicComboBoxUI.FocusHandler;
 
 
 public class GameScreen extends Window {
@@ -41,20 +45,39 @@ public class GameScreen extends Window {
 		
 		public void moveUp(){
 			SettingsContainer.currentUp++;
+
+			if(SettingsContainer.ctype==3){
 			if (SettingsContainer.currentUp == SettingsContainer.typeNum.length){
 				SettingsContainer.currentUp = 0;}
 			setText(Integer.toString(SettingsContainer.typeNum[SettingsContainer.currentUp]));
-				
+			}
 			
 			
+			if(SettingsContainer.ctype==2){
+				if (SettingsContainer.currentUp == SettingsContainer.typeChar.length){
+					SettingsContainer.currentUp = 0;}
+				setText(Character.toString(SettingsContainer.typeChar[SettingsContainer.currentUp]));
+			}
 		}
 		
 		public void moveDown(){
 			SettingsContainer.currentUp--;
+			
+			
+			
+			
+			if(SettingsContainer.ctype==3){
 			if (SettingsContainer.currentUp <0){
 				SettingsContainer.currentUp = SettingsContainer.typeNum.length-1;}
 			setText(Integer.toString(SettingsContainer.typeNum[SettingsContainer.currentUp]));
+			}
 			
+			
+			if(SettingsContainer.ctype==2){
+				if (SettingsContainer.currentUp <0){
+					SettingsContainer.currentUp = SettingsContainer.typeChar.length-1;}
+				setText(Character.toString(SettingsContainer.typeChar[SettingsContainer.currentUp]));
+			}
 			
 			
 		}
@@ -74,12 +97,14 @@ public class GameScreen extends Window {
 		
 		private Action leftAction = new Action() {
 			public void doAction() {
+				SettingsContainer.currentUp = 0;
 				moveLeft();
 			} 
 		};
 
 		private Action rightAction = new Action() {
 			public void doAction() {
+				SettingsContainer.currentUp = 0;
 				moveRight();
 			} 
 		};
