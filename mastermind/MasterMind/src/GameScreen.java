@@ -115,15 +115,17 @@ public class GameScreen extends Window {
         		
         		UpAction.doAction();
         		return Result.EVENT_HANDLED;
-        	case ArrowLeft:
-        	
-        	
-        		
+        	case ArrowLeft: 		
         	case ReverseTab:
         		leftAction.doAction();
         		return Result.EVENT_HANDLED;
         		//return Result.PREVIOUS_INTERACTABLE_LEFT;
-        		
+        	
+        	case Backspace:
+        		HelpScreen pomoc = new HelpScreen();
+        		MasterMind.textGUI.showWindow(pomoc, GUIScreen.Position.CENTER);
+        		pomoc.play();
+        		return Result.EVENT_HANDLED;
         	default:
         		return Result.EVENT_NOT_HANDLED;
         	}
@@ -170,6 +172,7 @@ public class GameScreen extends Window {
 		addComponent(mainPanel);
 		drawNextRow();
 		setFocus(brow[0]);
+		setRandomGoal();
 
 	}
 
