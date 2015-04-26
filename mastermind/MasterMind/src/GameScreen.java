@@ -40,25 +40,57 @@ public class GameScreen extends Window {
 		
 		
 		public void moveUp(){
+			if(SettingsContainer.ctype==3){
+				int check_int = (Integer.parseInt(brow[SettingsContainer.currentComponent].getText())+1)%6;
+				if(check_int==0){
+					setText("6");
+					brow[SettingsContainer.currentComponent].value=6;
+				}
+				else{
+					setText(Integer.toString(check_int));
+					brow[SettingsContainer.currentComponent].value=check_int;
+				}
+			}
+			if(SettingsContainer.ctype==2){
+				if((Integer.parseInt(brow[SettingsContainer.currentComponent].getText())+1)%6==0){
+					setText("6");
+					brow[SettingsContainer.currentComponent].value=6;
+				}
+				else{
+					setText(Integer.toString((Integer.parseInt(brow[SettingsContainer.currentComponent].getText())+1)%6));
+					brow[SettingsContainer.currentComponent].value=(Integer.parseInt(brow[SettingsContainer.currentComponent].getText())+1)%6;
+				}
+			}
+			/*
 			SettingsContainer.currentUp++;
 			if (SettingsContainer.currentUp == SettingsContainer.typeNum.length){
 				SettingsContainer.currentUp = 0;}
 			setText(Integer.toString(SettingsContainer.typeNum[SettingsContainer.currentUp]));
-				
-			
-			
+			 */	
+
+
 		}
-		
+
 		public void moveDown(){
+			if(SettingsContainer.ctype==3){
+				int check_int = (Integer.parseInt(brow[SettingsContainer.currentComponent].getText())+5)%6;
+				if(check_int==0){
+					setText("6");
+					brow[SettingsContainer.currentComponent].value=6;
+				}
+				else{
+					setText(Integer.toString(check_int));
+					brow[SettingsContainer.currentComponent].value=check_int;
+				}
+			}
+			/*
 			SettingsContainer.currentUp--;
 			if (SettingsContainer.currentUp <0){
 				SettingsContainer.currentUp = SettingsContainer.typeNum.length-1;}
 			setText(Integer.toString(SettingsContainer.typeNum[SettingsContainer.currentUp]));
-			
-			
-			
+			 */	
 		}
-		
+
 		private Action UpAction = new Action() {
 			public void doAction() {
 				moveUp();
