@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class GameScreen extends Window {
 	private class SelectableButton extends Button {
-		public int value = 1;
+		private int value;
 
 		public void moveRight() {        
 			SettingsContainer.currentComponent = (SettingsContainer.currentComponent+1)%SettingsContainer.chars;
@@ -40,56 +40,13 @@ public class GameScreen extends Window {
 		
 		
 		public void moveUp(){
-			if(SettingsContainer.ctype==3){
-				int check_int = (Integer.parseInt(brow[SettingsContainer.currentComponent].getText())+1)%6;
-				if(check_int==0){
-					setText("6");
-					brow[SettingsContainer.currentComponent].value=6;
-				}
-				else{
-					setText(Integer.toString(check_int));
-					brow[SettingsContainer.currentComponent].value=check_int;
-				}
-			}
-			if(SettingsContainer.ctype==2){
-				int check_int = (Integer.parseInt(brow[SettingsContainer.currentComponent].getText())+1)%6;
-				if(check_int==0){
-					setText("6");
-					brow[SettingsContainer.currentComponent].value=6;
-				}
-				else{
-					setText(Integer.toString(check_int));
-					brow[SettingsContainer.currentComponent].value=check_int;
-				}
-			}
-			/*
-			SettingsContainer.currentUp++;
-			if (SettingsContainer.currentUp == SettingsContainer.typeNum.length){
-				SettingsContainer.currentUp = 0;}
-			setText(Integer.toString(SettingsContainer.typeNum[SettingsContainer.currentUp]));
-			 */	
-
-
+            value = (value+1)%6;
+            setText(charArr[SettingsContainer.ctype][value].toString());
 		}
 
 		public void moveDown(){
-			if(SettingsContainer.ctype==3){
-				int check_int = (Integer.parseInt(brow[SettingsContainer.currentComponent].getText())+5)%6;
-				if(check_int==0){
-					setText("6");
-					brow[SettingsContainer.currentComponent].value=6;
-				}
-				else{
-					setText(Integer.toString(check_int));
-					brow[SettingsContainer.currentComponent].value=check_int;
-				}
-			}
-			/*
-			SettingsContainer.currentUp--;
-			if (SettingsContainer.currentUp <0){
-				SettingsContainer.currentUp = SettingsContainer.typeNum.length-1;}
-			setText(Integer.toString(SettingsContainer.typeNum[SettingsContainer.currentUp]));
-			 */	
+            value = (value-1+6)%6;
+            setText(charArr[SettingsContainer.ctype][value].toString());
 		}
 
 		private Action UpAction = new Action() {
@@ -129,8 +86,9 @@ public class GameScreen extends Window {
 			}
 		};
 
-		public SelectableButton(String text) {
+		public SelectableButton(String text, int value) {
 			super(text);
+            this.value = value;
 		}
 
 
@@ -172,6 +130,12 @@ public class GameScreen extends Window {
         }
 	}
 
+    private final Character[][] charArr = {
+        //Znaki
+        {'a', 'b', 'c', 'd', 'e', 'f'},
+        //Cyfry
+        {'1', '2', '3', '4', '5', '6'} };
+
 	//Stworzenie dwóch paneli - głównego na wszystko i table na ogólny obszar gry.
 	Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
 	Panel tablePanel = new Panel(Panel.Orientation.HORISONTAL);
@@ -210,21 +174,16 @@ public class GameScreen extends Window {
 	}
 
 	public void drawNextRow() {
-		if(SettingsContainer.ctype==3){
-			for(int j = 0; j < SettingsContainer.chars; ++j){
-				brow[j] = new SelectableButton("1");
-			}
-		}
 		if(SettingsContainer.ctype==2){
 			for(int j = 0; j < SettingsContainer.chars; ++j){
-				brow[j] = new SelectableButton("a");
+				brow[j] = new SelectableButton(Character.toString(ACS.BLOCK_SOLID), 0);				
 			}
 		}
-		if(SettingsContainer.ctype==1){
-			for(int j = 0; j < SettingsContainer.chars; ++j){
-				brow[j] = new SelectableButton(Character.toString(ACS.BLOCK_SOLID));				
-			}
-		}
+        else {
+			for(int j = 0; j < SettingsContainer.chars; ++j)
+                brow[j] = new SelectableButton(charArr[SettingsContainer.ctype][0].toString(), 0);
+        }
+
 		Component one = new Label(new String("" + SettingsContainer.turnNumber + "."));
 		ltable.addRow(one);
 		table.addRow(brow);
