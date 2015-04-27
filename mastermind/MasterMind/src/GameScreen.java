@@ -106,8 +106,6 @@ draw NextRow
 				}
 				two = new Label("B:" + perfect_hits + "W:" + semi_hits);
 				rtable.addRow(two);
-				perfect_hits = 0;
-				semi_hits = 0;
 				++SettingsContainer.turnNumber;
 				if(SettingsContainer.turnNumber > SettingsContainer.tries)
 					close();
@@ -230,7 +228,7 @@ draw NextRow
 	public void setRandomGoal(){
 		Random generator = new Random();
 		for (int i=0;i<SettingsContainer.chars;++i){
-			codes[i] = generator.nextInt(SettingsContainer.chars+1);
+			codes[i] = generator.nextInt(SettingsContainer.chars);
 			
 		}
 		tooltip = new Label(Arrays.toString(codes));
@@ -239,6 +237,10 @@ draw NextRow
 	}
 	
 	public void check_em(){
+        perfect_hits = 0;
+        semi_hits = 0;
+        codeTree.clear();
+        inputTree.clear();
 		for(int i = 0; i<SettingsContainer.chars;i++){
 			if(codes[i]==brow[i].value){
 				perfect_hits++;
@@ -255,6 +257,7 @@ draw NextRow
 		for(Integer val : codeTree){
 			if(inputTree.contains(val)){
 				semi_hits++;
+                System.out.println("Semi: " + val);
 			}
 		}
 	}
