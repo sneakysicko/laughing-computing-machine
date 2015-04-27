@@ -14,10 +14,8 @@ public class MasterMind {
 	static GUIScreen textGUI;
 	static Screen screen;
 	public static void main(String[] args) {
-		// Terminal terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
 		terminal = new SwingTerminal();
 		screen = new Screen(terminal);
-		//GUIScreen textGUI = TerminalFacade.createGUIScreen();
 		textGUI = new GUIScreen(screen);
 		    if(textGUI == null) {
 		        System.err.println("Couldn't allocate a terminal!");
@@ -26,7 +24,6 @@ public class MasterMind {
 		    textGUI.getScreen().startScreen();
 		    textGUI.setTitle("Mastermind");
 
-		  //MainMenu menu = new MainMenu();
 		    OptionsScreen options = new OptionsScreen();
 		    textGUI.showWindow(options, GUIScreen.Position.CENTER);
        	    GameScreen game = new GameScreen();

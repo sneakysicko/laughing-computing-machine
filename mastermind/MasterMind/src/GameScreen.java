@@ -27,7 +27,14 @@ import java.util.Random;
 public class GameScreen extends Window {
 	private class SelectableButton extends Button {
 		private int value;
-
+		private boolean is_checked = false;
+		public void check_em(){
+			for(int i = 0; i<SettingsContainer.chars;i++){
+				if(codes[i]==brow[i].value){
+					perfect_hits++;
+				}
+			}
+		}
 		public void moveRight() {        
 			SettingsContainer.currentComponent = (SettingsContainer.currentComponent+1)%SettingsContainer.chars;
 			setFocus(brow[SettingsContainer.currentComponent]);
@@ -76,6 +83,7 @@ public class GameScreen extends Window {
 
 		private Action defaultAction = new Action() {
 			public void doAction() {
+				check_em();
 				++SettingsContainer.turnNumber;
 				if(SettingsContainer.turnNumber > SettingsContainer.tries)
 					close();
@@ -155,8 +163,9 @@ public class GameScreen extends Window {
 
 	//Tooltip mówi nam o możliwościach programu
 	Component tooltip = new Label("Wciśnij klawisz 'Backspace' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
-
-
+	private int[] codes = new int[SettingsContainer.chars];
+	public int perfect_hits = 0;
+	public int semi_hits = 0;
 
 	GameScreen(){
 		super("Gra");
@@ -191,7 +200,7 @@ public class GameScreen extends Window {
 		table.addRow(brow);
 	}
 	
-	private int[] codes = new int[SettingsContainer.chars];
+	
 	//Ustalenie kodu do zgadniecia
 	public void setRandomGoal(){
 		Random generator = new Random();
