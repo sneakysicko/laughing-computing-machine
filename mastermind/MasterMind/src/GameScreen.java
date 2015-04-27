@@ -135,9 +135,6 @@ draw NextRow
         		rightAction.doAction();
         		return Result.EVENT_HANDLED;
         		
-        	case Escape:
-        		close();
-        		
         	case ArrowDown:
         		DownAction.doAction();
         		return Result.EVENT_HANDLED;
@@ -166,6 +163,10 @@ draw NextRow
         {'a', 'b', 'c', 'd', 'e', 'f'},
         //Cyfry
         {'1', '2', '3', '4', '5', '6'} };
+    
+    private final Terminal.Color[] colorArray = {Terminal.Color.RED, Terminal.Color.GREEN, 
+    		Terminal.Color.YELLOW, Terminal.Color.BLUE,
+    		Terminal.Color.MAGENTA, Terminal.Color.CYAN};
 
 	//Stworzenie dwóch paneli - głównego na wszystko i table na ogólny obszar gry.
 	Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
@@ -179,9 +180,12 @@ draw NextRow
 	Table rtable = new Table(1);
 	//brow (buttonrow) to tablica komponentów - w tym wypadku guzików
 	SelectableButton [] brow = new SelectableButton[SettingsContainer.chars];
-
+	Label [] sbrow = new Label[SettingsContainer.chars];
 	//Placeholdery
 	Component two = new Label("tyst");
+	
+	Button invisible = new Button("");
+	int[] colorValue = new int[SettingsContainer.chars];
 
 	//Tooltip mówi nam o możliwościach programu
 	Component tooltip = new Label("Wciśnij klawisz 'Backspace' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
@@ -200,17 +204,62 @@ draw NextRow
 		tablePanel.addComponent(rtable);
 		mainPanel.addComponent(tablePanel);
 		mainPanel.addComponent(tooltip);
+		mainPanel.addComponent(invisible);
 		addComponent(mainPanel);
 		drawNextRow();
-		setFocus(brow[0]);
+		invisible.setVisible(false);
+		if(SettingsContainer.ctype != 2)
+			setFocus(brow[0]);
+		else
+			setFocus(invisible);
 		setRandomGoal();
+		
+		mainPanel.addShortcut(Key.Kind.Escape, new Action() {
+			
+			@Override
+			public void doAction() {
+				close();
+			}
+		});
+		
+		if(SettingsContainer.ctype == 2) {
+			mainPanel.addShortcut(Key.Kind.ArrowLeft, new Action() {
+				
+				@Override
+				public void doAction() {
+					SettingsContainer.currentComponent = (SettingsContainer.currentComponent-1+SettingsContainer.chars)%SettingsContainer.chars;
+				}
+			});
+			mainPanel.addShortcut(Key.Kind.ArrowRight, new Action() {
 
+				@Override
+				public void doAction() {
+					SettingsContainer.currentComponent = (SettingsContainer.currentComponent+1)%SettingsContainer.chars;
+				}
+			});
+			mainPanel.addShortcut(Key.Kind.ArrowUp, new Action() {
+
+				@Override
+				public void doAction() {
+					colorValue[SettingsContainer.currentComponent] = (colorValue[SettingsContainer.currentComponent] +1)%6;
+		            sbrow[SettingsContainer.currentComponent] = new Label(Character.toString(ACS.BLOCK_SOLID), colorArray[colorValue[SettingsContainer.currentComponent]]);
+				}
+			});
+			mainPanel.addShortcut(Key.Kind.ArrowDown, new Action() {
+
+				@Override
+				public void doAction() {
+					colorValue[SettingsContainer.currentComponent] = (colorValue[SettingsContainer.currentComponent] +5)%6;
+		            sbrow[SettingsContainer.currentComponent] = new Label(Character.toString(ACS.BLOCK_SOLID), colorArray[colorValue[SettingsContainer.currentComponent]]);
+				}
+			});
+		}
 	}
 
 	public void drawNextRow() {
 		if(SettingsContainer.ctype==2){
 			for(int j = 0; j < SettingsContainer.chars; ++j){
-				brow[j] = new SelectableButton(Character.toString(ACS.BLOCK_SOLID), 0);				
+				sbrow[j] = new Label(Character.toString(ACS.BLOCK_SOLID), colorArray[0]);				
 			}
 		}
         else {
@@ -220,7 +269,10 @@ draw NextRow
 
 		Component one = new Label(new String("" + SettingsContainer.turnNumber + "."));
 		ltable.addRow(one);
-		table.addRow(brow);
+		if(SettingsContainer.ctype != 2)
+			table.addRow(brow);
+		else
+			table.addRow(sbrow);
 	}
 	
 	
