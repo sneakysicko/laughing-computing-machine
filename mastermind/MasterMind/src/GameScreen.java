@@ -28,29 +28,20 @@ import java.util.TreeSet;
 
 
 public class GameScreen extends Window {
+    private class ColorControler extends Button {
+        ColorControler(String s) {
+            super(s);
+        }
+
+        @Override
+        public Interactable.Result keyboardInteraction(Key key) {
+            return Result.EVENT_NOT_HANDLED;
+        }
+    }
+
 	private class SelectableButton extends Button {
 		private int value;
 		private boolean is_checked = false;
-		
-
-		/*
-		 * for i = 0; i < chars; ++i:
-    if input[i].value == code[i].value then
-        perfect_hits++
-    else
-        add input[i].value to InputTree
-        add code[i].value to CodeTree
-if perfect_hits == chars:
-    draw feedback
-    win()
-for val in CodeTree:
-    if InputTree.contains(val):
-        semi_hits++
-draw feedback
-draw NextRow
-
-		 */
-		
 		
 		public void moveRight() {        
 			SettingsContainer.currentComponent = (SettingsContainer.currentComponent+1)%SettingsContainer.chars;
@@ -184,7 +175,7 @@ draw NextRow
 	//Placeholdery
 	Component two = new Label("tyst");
 	
-	Button invisible = new Button("");
+	ColorControler invisible = new ColorControler("");
 	int[] colorValue = new int[SettingsContainer.chars];
 
 	//Tooltip mówi nam o możliwościach programu
@@ -242,7 +233,7 @@ draw NextRow
 				@Override
 				public void doAction() {
 					colorValue[SettingsContainer.currentComponent] = (colorValue[SettingsContainer.currentComponent] +1)%6;
-		            sbrow[SettingsContainer.currentComponent] = new Label(Character.toString(ACS.BLOCK_SOLID), colorArray[colorValue[SettingsContainer.currentComponent]]);
+		            sbrow[SettingsContainer.currentComponent].setTextColor(colorArray[colorValue[SettingsContainer.currentComponent]]);
 				}
 			});
 			mainPanel.addShortcut(Key.Kind.ArrowDown, new Action() {
@@ -250,7 +241,7 @@ draw NextRow
 				@Override
 				public void doAction() {
 					colorValue[SettingsContainer.currentComponent] = (colorValue[SettingsContainer.currentComponent] +5)%6;
-		            sbrow[SettingsContainer.currentComponent] = new Label(Character.toString(ACS.BLOCK_SOLID), colorArray[colorValue[SettingsContainer.currentComponent]]);
+		            sbrow[SettingsContainer.currentComponent].setTextColor(colorArray[colorValue[SettingsContainer.currentComponent]]);
 				}
 			});
 		}
