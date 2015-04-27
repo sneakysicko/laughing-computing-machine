@@ -124,7 +124,6 @@ public class GameScreen extends Window {
         	case Backspace:
         		HelpScreen pomoc = new HelpScreen();
         		MasterMind.textGUI.showWindow(pomoc, GUIScreen.Position.CENTER);
-        		pomoc.play();
         		return Result.EVENT_HANDLED;
         	default:
         		return Result.EVENT_NOT_HANDLED;
@@ -155,7 +154,7 @@ public class GameScreen extends Window {
 	Component two = new Label("tyst");
 
 	//Tooltip mówi nam o możliwościach programu
-	Component tooltip = new Label("Wciśnij klawisz 'F1' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
+	Component tooltip = new Label("Wciśnij klawisz 'Backspace' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
 
 
 
