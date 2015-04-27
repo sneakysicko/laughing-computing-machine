@@ -7,4 +7,5 @@ public class SettingsContainer {
 	public static final int triesLimit = 15; //Jak wyżej
 	public static int turnNumber = 1; //Trackuje która jest tura, wykorzystywany do gry i w score screenie
 	public static int currentComponent = 0; // Wykorzystywany do zlokalizowania który komponent jest obecnie zaznaczony w GameScreenie.
+	public static boolean win = false;
 }

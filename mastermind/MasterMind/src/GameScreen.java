@@ -21,20 +21,37 @@ import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.ACS;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.Key.Kind;
+
+import java.util.Arrays;
 import java.util.Random;
+import java.util.TreeSet;
 
 
 public class GameScreen extends Window {
 	private class SelectableButton extends Button {
 		private int value;
 		private boolean is_checked = false;
-		public void check_em(){
-			for(int i = 0; i<SettingsContainer.chars;i++){
-				if(codes[i]==brow[i].value){
-					perfect_hits++;
-				}
-			}
-		}
+		
+
+		/*
+		 * for i = 0; i < chars; ++i:
+    if input[i].value == code[i].value then
+        perfect_hits++
+    else
+        add input[i].value to InputTree
+        add code[i].value to CodeTree
+if perfect_hits == chars:
+    draw feedback
+    win()
+for val in CodeTree:
+    if InputTree.contains(val):
+        semi_hits++
+draw feedback
+draw NextRow
+
+		 */
+		
+		
 		public void moveRight() {        
 			SettingsContainer.currentComponent = (SettingsContainer.currentComponent+1)%SettingsContainer.chars;
 			setFocus(brow[SettingsContainer.currentComponent]);
@@ -84,6 +101,13 @@ public class GameScreen extends Window {
 		private Action defaultAction = new Action() {
 			public void doAction() {
 				check_em();
+				if(SettingsContainer.win == true){
+					close();
+				}
+				two = new Label("B:" + perfect_hits + "W:" + semi_hits);
+				rtable.addRow(two);
+				perfect_hits = 0;
+				semi_hits = 0;
 				++SettingsContainer.turnNumber;
 				if(SettingsContainer.turnNumber > SettingsContainer.tries)
 					close();
@@ -166,7 +190,8 @@ public class GameScreen extends Window {
 	private int[] codes = new int[SettingsContainer.chars];
 	public int perfect_hits = 0;
 	public int semi_hits = 0;
-
+	public TreeSet<Integer> inputTree= new TreeSet<Integer>();
+	public TreeSet<Integer> codeTree = new TreeSet<Integer>();
 	GameScreen(){
 		super("Gra");
 
@@ -208,11 +233,31 @@ public class GameScreen extends Window {
 			codes[i] = generator.nextInt(SettingsContainer.chars+1);
 			
 		}
-		
+		tooltip = new Label(Arrays.toString(codes));
+		mainPanel.addComponent(tooltip);
 		
 	}
 	
-	
+	public void check_em(){
+		for(int i = 0; i<SettingsContainer.chars;i++){
+			if(codes[i]==brow[i].value){
+				perfect_hits++;
+			}
+			else
+			{
+				inputTree.add(brow[i].value);
+				codeTree.add(codes[i]);
+			}
+		}
+		if(perfect_hits==SettingsContainer.chars){
+			SettingsContainer.win = true;
+		}
+		for(Integer val : codeTree){
+			if(inputTree.contains(val)){
+				semi_hits++;
+			}
+		}
+	}
 	
 	
 	
