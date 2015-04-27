@@ -138,11 +138,6 @@ public class GameScreen extends Window {
         		leftAction.doAction();
         		return Result.EVENT_HANDLED;
         		//return Result.PREVIOUS_INTERACTABLE_LEFT;
-        	
-        	case Backspace:
-        		HelpScreen pomoc = new HelpScreen();
-        		MasterMind.textGUI.showWindow(pomoc, GUIScreen.Position.CENTER);
-        		return Result.EVENT_HANDLED;
         	default:
         		return Result.EVENT_NOT_HANDLED;
         	}
@@ -206,13 +201,20 @@ public class GameScreen extends Window {
 		setRandomGoal();
 		
 		mainPanel.addShortcut(Key.Kind.Escape, new Action() {
-			
+
 			@Override
 			public void doAction() {
 				close();
 			}
 		});
-		
+		mainPanel.addShortcut(Key.Kind.Backspace, new Action() {
+
+			@Override
+			public void doAction() {
+				HelpScreen pomoc = new HelpScreen();
+        		MasterMind.textGUI.showWindow(pomoc, GUIScreen.Position.CENTER);
+			}
+		});
 		if(SettingsContainer.ctype == 2) {
 			mainPanel.addShortcut(Key.Kind.ArrowLeft, new Action() {
 				
@@ -242,6 +244,26 @@ public class GameScreen extends Window {
 				public void doAction() {
 					colorValue[SettingsContainer.currentComponent] = (colorValue[SettingsContainer.currentComponent] +5)%6;
 		            sbrow[SettingsContainer.currentComponent].setTextColor(colorArray[colorValue[SettingsContainer.currentComponent]]);
+				}
+			});
+			mainPanel.addShortcut(Key.Kind.Enter, new Action() {
+
+				@Override
+				public void doAction() {
+					check_em();
+					if(SettingsContainer.win == true){
+						close();
+					}
+					two = new Label("B:" + perfect_hits + "W:" + semi_hits);
+					rtable.addRow(two);
+					++SettingsContainer.turnNumber;
+					if(SettingsContainer.turnNumber > SettingsContainer.tries)
+						close();
+					else
+						drawNextRow();
+					if(SettingsContainer.ctype!=2)
+						setFocus(brow[0]);
+					SettingsContainer.currentComponent = 0;
 				}
 			});
 		}
@@ -284,6 +306,7 @@ public class GameScreen extends Window {
         semi_hits = 0;
         codeTree.clear();
         inputTree.clear();
+        if(SettingsContainer.ctype!=2){
 		for(int i = 0; i<SettingsContainer.chars;i++){
 			if(codes[i]==brow[i].value){
 				perfect_hits++;
@@ -303,6 +326,28 @@ public class GameScreen extends Window {
                 System.out.println("Semi: " + val);
 			}
 		}
+        }
+        else{
+        	for(int i = 0; i<SettingsContainer.chars;i++){
+    			if(codes[i]==colorValue[i]){
+    				perfect_hits++;
+    			}
+    			else
+    			{
+    				inputTree.add(colorValue[i]);
+    				codeTree.add(codes[i]);
+    			}
+    		}
+    		if(perfect_hits==SettingsContainer.chars){
+    			SettingsContainer.win = true;
+    		}
+    		for(Integer val : codeTree){
+    			if(inputTree.contains(val)){
+    				semi_hits++;
+                    //System.out.println("Semi: " + val);
+    			}
+    		}
+        }
 	}
 	
 	
