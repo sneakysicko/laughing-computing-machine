@@ -270,6 +270,7 @@ public class GameScreen extends Window {
 					//if(SettingsContainer.ctype!=2)
 						//setFocus(brow[0]);
 					SettingsContainer.currentComponent = 0;
+					Arrays.fill(colorValue,0);
 					sbrow[0].setText(Character.toString(ACS.BLOCK_SPARSE));
 				}
 			});
@@ -301,7 +302,7 @@ public class GameScreen extends Window {
 	public void setRandomGoal(){
 		Random generator = new Random();
 		for (int i=0;i<SettingsContainer.chars;++i){
-			codes[i] = generator.nextInt(SettingsContainer.chars);
+			codes[i] = generator.nextInt(6);
 			
 		}
 		tooltip = new Label(Arrays.toString(codes));

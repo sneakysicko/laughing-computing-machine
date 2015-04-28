@@ -14,19 +14,6 @@ import com.googlecode.lanterna.gui.layout.LinearLayout;
 
 public class OptionsScreen extends Window {
 	
-	public static boolean isNumeric(String str)  
-	{  
-	  try  
-	  {  
-	    int d = Integer.parseInt(str);  
-	  }  
-	  catch(NumberFormatException nfe)  
-	  {  
-	    return false;  
-	  }  
-	  return true;  
-	}
-	
 	public OptionsScreen(){
 		super("Konfiguracja");
 
@@ -83,19 +70,27 @@ public class OptionsScreen extends Window {
 				if(option_left.getCheckedItemIndex()==3){
 					boolean test = true;
 					while(test){
-						int new_chars=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość znaków","Podaj ilość znaków od 4 (minimum) do " + SettingsContainer.charsLimit + " (maksimum)",""));
-						if(new_chars>=4 && new_chars<=SettingsContainer.charsLimit){
-							test = false;
-							SettingsContainer.chars=new_chars;
-
+						try{
+							int new_chars=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość znaków","Podaj ilość znaków od 4 (minimum) do " + SettingsContainer.charsLimit + " (maksimum)","5"));
+							if(new_chars>=4 && new_chars<=SettingsContainer.charsLimit){
+								test = false;
+								SettingsContainer.chars=new_chars;
+							}
+						}catch(NumberFormatException nfe){
+							MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co nie jest liczbą");
 						}
+
 					}
 					test = true;
 					while(test){
-						int new_tries=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.triesLimit + " (maksimum)",""));
+						try{
+						int new_tries=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.triesLimit + " (maksimum)","10"));
 						if(new_tries>=4 && new_tries<=SettingsContainer.triesLimit){
 							test = false;
 							SettingsContainer.tries=new_tries;
+						}
+						}catch(NumberFormatException nfe){
+							MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co nie jest liczbą");
 						}
 					}
 				}
