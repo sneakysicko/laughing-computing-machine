@@ -220,14 +220,18 @@ public class GameScreen extends Window {
 				
 				@Override
 				public void doAction() {
+					sbrow[SettingsContainer.currentComponent].setText(Character.toString(ACS.BLOCK_SOLID));
 					SettingsContainer.currentComponent = (SettingsContainer.currentComponent-1+SettingsContainer.chars)%SettingsContainer.chars;
+					sbrow[SettingsContainer.currentComponent].setText(Character.toString(ACS.BLOCK_SPARSE));
 				}
 			});
 			mainPanel.addShortcut(Key.Kind.ArrowRight, new Action() {
 
 				@Override
 				public void doAction() {
+					sbrow[SettingsContainer.currentComponent].setText(Character.toString(ACS.BLOCK_SOLID));
 					SettingsContainer.currentComponent = (SettingsContainer.currentComponent+1)%SettingsContainer.chars;
+					sbrow[SettingsContainer.currentComponent].setText(Character.toString(ACS.BLOCK_SPARSE));
 				}
 			});
 			mainPanel.addShortcut(Key.Kind.ArrowUp, new Action() {
@@ -259,11 +263,14 @@ public class GameScreen extends Window {
 					++SettingsContainer.turnNumber;
 					if(SettingsContainer.turnNumber > SettingsContainer.tries)
 						close();
-					else
+					else{
+						sbrow[SettingsContainer.currentComponent].setText(Character.toString(ACS.BLOCK_SOLID));
 						drawNextRow();
-					if(SettingsContainer.ctype!=2)
-						setFocus(brow[0]);
+					}
+					//if(SettingsContainer.ctype!=2)
+						//setFocus(brow[0]);
 					SettingsContainer.currentComponent = 0;
+					sbrow[0].setText(Character.toString(ACS.BLOCK_SPARSE));
 				}
 			});
 		}
@@ -274,6 +281,7 @@ public class GameScreen extends Window {
 			for(int j = 0; j < SettingsContainer.chars; ++j){
 				sbrow[j] = new Label(Character.toString(ACS.BLOCK_SOLID), colorArray[0]);				
 			}
+			sbrow[0].setText(Character.toString(ACS.BLOCK_SPARSE));
 		}
         else {
 			for(int j = 0; j < SettingsContainer.chars; ++j)

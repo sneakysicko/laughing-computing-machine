@@ -13,6 +13,20 @@ import com.googlecode.lanterna.gui.dialog.TextInputDialog;
 import com.googlecode.lanterna.gui.layout.LinearLayout;
 
 public class OptionsScreen extends Window {
+	
+	public static boolean isNumeric(String str)  
+	{  
+	  try  
+	  {  
+	    int d = Integer.parseInt(str);  
+	  }  
+	  catch(NumberFormatException nfe)  
+	  {  
+	    return false;  
+	  }  
+	  return true;  
+	}
+	
 	public OptionsScreen(){
 		super("Konfiguracja");
 
