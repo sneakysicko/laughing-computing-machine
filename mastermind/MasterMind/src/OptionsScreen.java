@@ -12,37 +12,70 @@ import com.googlecode.lanterna.gui.dialog.MessageBox;
 import com.googlecode.lanterna.gui.dialog.TextInputDialog;
 import com.googlecode.lanterna.gui.layout.LinearLayout;
 
+/**
+ * OptionsScreen to pierwsze okno które zobaczy użytkownik. Jest ono bardzo ważne, bo ustawiamy w nim kluczowe rzeczy.
+ * @author Otoshigami
+ *
+ */
 public class OptionsScreen extends Window {
 	
+	/**
+	 *  Panel mainPanel służy jako główny panel okna. W nim znajdują się wszystkie inne obiekty. Jego orientacja jest pionowa.
+	 */
+	Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
+	
+	/**
+	 * Pomocniczy panel o orientacji poziomej
+	 */
+	Panel optionPanel = new Panel(Panel.Orientation.HORISONTAL);
+	
+	/**
+	 * Panel do lewej grupy radio buttonów.
+	 */
+	Panel leftPanel = new Panel();
+	
+	/**
+	 * Panel do prawj grupy radio buttonów.
+	 */
+	Panel rightPanel = new Panel();
+	
+	/**
+	 * Lista radio buttonów po lewej
+	 */
+	RadioCheckBoxList option_left = new RadioCheckBoxList();
+	
+	/**
+	 * Lista radio buttonów po prawej.
+	 */
+	RadioCheckBoxList option_right = new RadioCheckBoxList();
+	
+	/**
+	 * Konstruktor domyślny okna OptionsScreen robi wszystko i nadaje odpowiednią funkcjonalność
+	 * temu oknu. Na początku dodaje on opcje do odpowiednich paneli i ustawia je w oknie.
+	 * Ponadto tworzone zostają dwa guziki - exitButton, który wychodzi z programu i startButton,
+	 * który sprawdza jakie opcje są zaznaczone, ustala takie zmienne w SettingsContainerze i
+	 * wyświetla dodatkowe okna z wpisywaniem, jeśli korzystamy z opcji własnej. Są tam także dwa
+	 * sprawdzenia - czy to co wpisaliśmy jest liczbą, oraz czy jest to w naszym zakresie.
+	 * Po ustaleniu pól SettingsContainera okno się zamyka.
+	 * 
+	 */
 	public OptionsScreen(){
 		super("Konfiguracja");
-
-		Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
-		Panel optionPanel = new Panel(Panel.Orientation.HORISONTAL);
-		Panel leftPanel = new Panel();
-		Panel rightPanel = new Panel();
-
-
-
-		//Tworzenie dwóch checkboxów z jedną opcją na raz.
-		RadioCheckBoxList option_left = new RadioCheckBoxList();
-		RadioCheckBoxList option_right = new RadioCheckBoxList();
-
+		
 		//Dodawanie opcji menu z lewej strony.
 		option_left.addItem("4 znaki 9 prób");
 		option_left.addItem("5 znaków 12 prób");
 		option_left.addItem("6 znaków 15 prób");
 		option_left.addItem("x znaków y prób");
 		leftPanel.addComponent(option_left);
-		//addComponent(option_left);
 		option_right.addItem("kolory");
 		option_right.addItem("znaki");
 		option_right.addItem("cyfry");
-		//addComponent(option_right);
 		rightPanel.addComponent(option_right);
 
 		optionPanel.addComponent(leftPanel);
 		optionPanel.addComponent(rightPanel);
+		
 		//Dodawanie dolnego panelu, który będzie zawierał przycisk startu i przycisk końca.
 		Panel buttonPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
 		Button exitButton = new Button("Wyjście", new Action() {
@@ -75,6 +108,8 @@ public class OptionsScreen extends Window {
 							if(new_chars>=4 && new_chars<=SettingsContainer.charsLimit){
 								test = false;
 								SettingsContainer.chars=new_chars;
+							}else{
+								MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co wykracza poza zakres");
 							}
 						}catch(NumberFormatException nfe){
 							MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co nie jest liczbą");
@@ -84,11 +119,13 @@ public class OptionsScreen extends Window {
 					test = true;
 					while(test){
 						try{
-						int new_tries=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.triesLimit + " (maksimum)","10"));
-						if(new_tries>=4 && new_tries<=SettingsContainer.triesLimit){
-							test = false;
-							SettingsContainer.tries=new_tries;
-						}
+							int new_tries=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.triesLimit + " (maksimum)","10"));
+							if(new_tries>=4 && new_tries<=SettingsContainer.triesLimit){
+								test = false;
+								SettingsContainer.tries=new_tries;
+							}else{
+								MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co wykracza poza zakres");
+							}
 						}catch(NumberFormatException nfe){
 							MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co nie jest liczbą");
 						}

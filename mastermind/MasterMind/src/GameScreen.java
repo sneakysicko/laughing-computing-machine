@@ -26,49 +26,95 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.TreeSet;
 
-
+/**
+ * Klasa GameScreen jest nowym oknem, w którym odbywa się większość działań naszego programu. Jest to w sumie cały grywalny moduł MasterMinda.
+ * @author Otoshigami
+ *
+ */
 public class GameScreen extends Window {
+	
+	/**
+	 * Klasa ColorControler to nowy guzik, wprowadzony tylko w celu ominięcia limitów Lanterny. Jest to po prostu bezużyteczny guzik, który pełni jedynie funkcje jakiegoś Interactable komponentu w głównym panelu (jest to konieczne aby obsłużyć Labele, gdy gramy na kolory).
+	 * @author Otoshigami
+	 *
+	 */
     private class ColorControler extends Button {
+    	
+    	/**
+    	 * Konstruktor ColorControlera jest najzwyczajniejszym wywołaniem konstruktora guzika.
+    	 * @param s	Napis, jaki chcemy żeby pokazał się na guziku.
+    	 */
         ColorControler(String s) {
             super(s);
         }
-
+        
+        
+        /**
+         * keyboardInteraction przeładowuje odpowiednik w Buttonie. Odpowiada za obsługę zdarzen z klawiatury gdy element ma fokus. Tutaj zależy nam na tym żeby zdarzenia nie mogły być obsługiwane, przez co Lanterna zacznie szukać czy są jakieś skróty klawiaturowe w MainPanelu, o co nam właśnie chodzi.
+         * @param key
+         */
         @Override
         public Interactable.Result keyboardInteraction(Key key) {
             return Result.EVENT_NOT_HANDLED;
         }
     }
 
+    /**
+     * SelectableButton to kolejny guzik, tym razem z funkcjami. Jest on głównym elementem gry jeśli wybraliśmy cyfry lub litery.
+     * @author Otoshigami
+     *
+     */
 	private class SelectableButton extends Button {
+		/**
+		 * Prywatne pole value jest stworzone dla wygody. Przechowuje ono wartość liczbową, która służy do porównania naszego wybranego wzorka z wzorem wylosowanym przez program.
+		 */
 		private int value;
-		private boolean is_checked = false;
 		
+		/**
+		 * Funkcja moveRight nic nie zwraca i nic nie przyjmuje, odpowiada po prostu za ruch w prawo. Czyni to zmieniając pole currentComponent w SettingsContainerze, a potem nadając fokus odpowiedniemu guzikowi z tablicy brow.
+		 */
 		public void moveRight() {        
 			SettingsContainer.currentComponent = (SettingsContainer.currentComponent+1)%SettingsContainer.chars;
 			setFocus(brow[SettingsContainer.currentComponent]);
 		}
 		
+		/**
+		 * Funkcja moveLeft nic nie zwraca i nic nie przyjmuje, odpowiada po prostu za ruch w lewo. Czyni to zmieniając pole currentComponent w SettingsContainerze, a potem nadając fokus odpowiedniemu guzikowi z tablicy brow.
+		 */
 		public void moveLeft(){       
 			SettingsContainer.currentComponent = (SettingsContainer.currentComponent-1+SettingsContainer.chars)%SettingsContainer.chars;
 			setFocus(brow[SettingsContainer.currentComponent]);
 		}
 		
-		
+		/**
+		 * Funkcja moveUp odpowiada za zwiększanie wartości w guziku. Zmienia ona i wartość (pole value) i wyświetlany tekst (pobiera go z tablicy charArr, ktora jest wypełniona liczbami lub literkami.
+		 */
 		public void moveUp(){
             value = (value+1)%6;
             setText(charArr[SettingsContainer.ctype][value].toString());
 		}
-
+		
+		
+		/**
+		 * Funkcja moveDown odpowiada za zmniejszanie wartości w guziku. Zmienia ona i wartość (pole value) i wyświetlany tekst (pobiera go z tablicy charArr, ktora jest wypełniona liczbami lub literkami.
+		 */
 		public void moveDown(){
             value = (value-1+6)%6;
             setText(charArr[SettingsContainer.ctype][value].toString());
 		}
-
+		
+		/**
+		 * Trzymając się wzorców w Lanternie, to akcje powinny wywoływać jakieś funkcje w guzikach. Ta akcja wywołuje funkcję moveUp.
+		 */
 		private Action UpAction = new Action() {
 			public void doAction() {
 				moveUp();
 			} 
 		};
+		
+		/**
+		 * Trzymając się wzorców w Lanternie, to akcje powinny wywoływać jakieś funkcje w guzikach. Ta akcja wywołuje funkcję moveDown.
+		 */
 		private Action DownAction = new Action() {
 			public void doAction() {
 				moveDown();
@@ -76,20 +122,37 @@ public class GameScreen extends Window {
 		};
 
 		
-		
+		/**
+		 * Trzymając się wzorców w Lanternie, to akcje powinny wywoływać jakieś funkcje w guzikach. Ta akcja wywołuje funkcję moveLeft.
+		 */
 		private Action leftAction = new Action() {
 			public void doAction() {
 				moveLeft();
 			} 
 		};
-
+		
+		
+		/**
+		 * Trzymając się wzorców w Lanternie, to akcje powinny wywoływać jakieś funkcje w guzikach. Ta akcja wywołuje funkcję moveRight.
+		 */
 		private Action rightAction = new Action() {
 			public void doAction() {
 				moveRight();
 			} 
 		};
 
+		/**
+		 * Trzymając się wzorców w Lanternie, to akcje powinny wywoływać jakieś funkcje w guzikach. Ta akcja wywołuje funkcję doAction (domyślna nazwa funkcji do domyślnej akcji).
+		 * 
+		 * 
+		 */
 		private Action defaultAction = new Action() {
+			/**
+			 * Funkcja doAction wywołuje funkcję check_em, a potem sprawdza czy zmienna win w SettingsContainer jest true. Jeśli tak, to przechodzimy do ScoreScreena (wygrana).
+			 * Jeśli nie, to tworzymy nowy Label zawierający podpowiedzi jak dobry był nasz traf i dodajemy go do tablicy rtable.
+			 * Potem zwiększa turę i sprawdza czy już skończyliśmy. Jeśli tak to także przechodzimy do ScoreScreena. 
+			 * W przeciwnym wypadku wywołujemy funkcję drawNextRow, ustalamy fokus na pierwszy guzik i odpowiednio zmieniamy currentComponent na zero.
+			 */
 			public void doAction() {
 				check_em();
 				if(SettingsContainer.win == true){
@@ -106,14 +169,23 @@ public class GameScreen extends Window {
 				SettingsContainer.currentComponent = 0;
 			}
 		};
-
+		
+		/**
+		 * Konstruktor SelectableButton pozwala nam tworzyć guziki z odpowiednią wartością i napisem
+		 * @param text Tekst który wyświetla się na guziku
+		 * @param value Wartość znana tylko programowi
+		 */
 		public SelectableButton(String text, int value) {
 			super(text);
             this.value = value;
 		}
 
 
-
+		/**
+		 * Funkcja keyboardInteraction implementuję całą obsługę klawiatury przez nasz guzik.
+		 * @param key Klawisz który wcisnęliśmy mając fokus na guziku
+		 * @return Rezultat informujący o rozstrzygnięciu zdarzenia lub jego braku.
+		 */
         @Override
         public Interactable.Result keyboardInteraction(Key key) {
         	switch(key.getKind()) {
@@ -137,49 +209,121 @@ public class GameScreen extends Window {
         	case ReverseTab:
         		leftAction.doAction();
         		return Result.EVENT_HANDLED;
-        		//return Result.PREVIOUS_INTERACTABLE_LEFT;
         	default:
         		return Result.EVENT_NOT_HANDLED;
         	}
         }
 	}
 
+	/**
+	 * Stała tablica znaków charArr służy do wypełniania guzików jakimś tekstem. Jest to tablica o wymiarach 2x6, zawierająca po prostu sześć pierwszych cyfr i liter alfabetu.
+	 */
     private final Character[][] charArr = {
-        //Znaki
         {'a', 'b', 'c', 'd', 'e', 'f'},
-        //Cyfry
         {'1', '2', '3', '4', '5', '6'} };
     
+    /**
+     * Stała tablica kolorów colorArray to specjalna tablica przechowująca zmienne określające kolory Terminala. Służy nam ona do zmieniana kolorów labeli, których używamy zamiast buttonów. Zawiera ona sześć dobranych kolorów.
+     */
     private final Terminal.Color[] colorArray = {Terminal.Color.RED, Terminal.Color.GREEN, 
     		Terminal.Color.YELLOW, Terminal.Color.BLUE,
     		Terminal.Color.MAGENTA, Terminal.Color.CYAN};
 
-	//Stworzenie dwóch paneli - głównego na wszystko i table na ogólny obszar gry.
+	/**
+	 * Panel mainPanel służy jako główny panel okna gry. W nim znajdują się wszystkie inne obiekty. Jego orientacja jest pionowa.
+	 */
 	Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
+	
+	/**
+	 * Panel tablePanel powstał w celu organizacji tablic, z których składa się okno gry. Jego orientacja jest pozioma.
+	 */
 	Panel tablePanel = new Panel(Panel.Orientation.HORISONTAL);
 
-	//Tworzenie nowej tablicy na znaki (buttony)
+	/**
+	 * table to nasza główna tablica, która ma tyle kolumn ile wynosi zmienna chars w SettingsContainer. Przechowywać będzie Labele lub SelectableButtony.
+	 */
 	Table table = new Table(SettingsContainer.chars);
 
-	//Żeby to działało potrzebujemy dwie jednokolumnowe tabelki na LAbele.
+	/**
+	 * Lewa tablica, która przechowuje Labele z numerem tury. Ma tylko jedną kolumnę
+	 */
 	Table ltable = new Table(1);
-	Table rtable = new Table(1);
-	//brow (buttonrow) to tablica komponentów - w tym wypadku guzików
-	SelectableButton [] brow = new SelectableButton[SettingsContainer.chars];
-	Label [] sbrow = new Label[SettingsContainer.chars];
-	//Placeholdery
-	Component two = new Label("tyst");
 	
+	/**
+	 * Prawa tablica, która przechowuje Labele z podpowiedziami. Ma tylko jedną kolumnę.
+	 */
+	Table rtable = new Table(1);
+
+	/**
+	 * button row, w skrócie brow to tablica SelectableButtonów, która startuje z tyloma guzikami ile wynosi zmienna chars w SettingsContainerze.
+	 */
+	SelectableButton [] brow = new SelectableButton[SettingsContainer.chars];
+	
+	/**
+	 * special button row, w skrócie sbrow to tak naprawdę tablica przechowująca "fałszywe" guziki, czyli Labele. Tak jak w przypadku brow, startuje z tyloma etykietami ile wynosi zmienna chars.
+	 */
+	Label [] sbrow = new Label[SettingsContainer.chars];
+
+	/**
+	 * two jest pewnego rodzaju placeholderem, na którego miejsce będziemy wrzucać podpowiedzi.
+	 */
+	Component two = new Label("a");
+	
+	/**
+	 * invisible to nowy guzik - ColorControler. Nazywa się tak bo z zamiaru ma być niewidoczny.
+	 */
 	ColorControler invisible = new ColorControler("");
+	
+	/**
+	 * Tablica colorValue to obejście tego, ze labele nie mogą mieć pola wartości. Dlatego właśnie tworzymy do nich pomocniczą tablicę, która będzie zawierała wartości liczbowe.
+	 */
 	int[] colorValue = new int[SettingsContainer.chars];
 
-	//Tooltip mówi nam o możliwościach programu
+	/**
+	 * tooltip mówi nam o opcjach, które powinny być zawsze wiadome. Jest to zwykły label.
+	 */
 	Component tooltip = new Label("Wciśnij klawisz 'Backspace' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
+	
+	/**
+	 * Tablica intów codes to tablica na wylosowany kod, który mamy odgadnąć.
+	 */
 	private int[] codes = new int[SettingsContainer.chars];
+	
+	/**
+	 * perfect_hits odpowiada liczbie elementów które trafiliśmy w stu procentach.
+	 */
 	public int perfect_hits = 0;
+	
+	/**
+	 * semi_hits odpowiada liczbie elementów które mają dobry kolor, ale są na złym miejscu.
+	 */
 	public int semi_hits = 0;
+	
+	/**
+	 * inputTree jest TreeSetem dla wpisywanych przez nas wartości.
+	 */
 	public TreeSet<Integer> inputTree= new TreeSet<Integer>();
+	
+	/**
+	 * codeTree jest treesetem dla wylosowanych wartości
+	 */
 	public TreeSet<Integer> codeTree = new TreeSet<Integer>();
+	
+	/**
+	 * Konstruktor GameScreen robi wiele rzeczy, które sprawiają że gra działa. Przede wszystkim ustawia wszystkie panele tam gdzie trzeba
+	 * i wykonuje drawNewRow aby narysować pierwszy rządek. Ustawia także przycisk invisible na niewidzialny.
+	 * Potem konstruktor sprawdza czy gramy na kolory. Jeśli tak, to focus idzie na invisible, jeśli nie, to
+	 * focus idzie na pierwszy guzik z tablicy brow. Potem wykonywana jest funkcja setRandomGoal. 
+	 * Na samym końcu do głównego panelu dodawane są skróty klawiszowe. Opis poszczególnych skrótów:
+	 * Escape : zamyka program
+	 * Backspace: tworzy nowe okno pomocy i wyświetla je
+	 * Skróty tworzone tylko przy grze na kolory:
+	 * ArrowLeft: Zmienia current component i wygląd labela z BLOCK_SOLID na BLOCK_SPARSE, symulując ruch w lewo
+	 * ArrowRight: Zmienia current component i wygląd labela z BLOCK_SOLID na BLOCK_SPARSE, symulując ruch w prawo
+	 * ArrowUp: Zwiększa wartość w odpowiednim colorValue i zmienia kolor obecnego labela (sbrow) na kolejny.
+	 * ArrowDown: Zmniejsza wartość w odpowiednim colorValue i zmienia kolor obecnego labela (sbrow) na poprzedni.
+	 * Enter: Robi to samo co Enter w SelectableButton, aczkolwiek uwzględnia to że pracujemy na labelach.
+	 */
 	GameScreen(){
 		super("Gra");
 
@@ -201,7 +345,7 @@ public class GameScreen extends Window {
 		setRandomGoal();
 		
 		mainPanel.addShortcut(Key.Kind.Escape, new Action() {
-
+			
 			@Override
 			public void doAction() {
 				close();
@@ -276,7 +420,14 @@ public class GameScreen extends Window {
 			});
 		}
 	}
-
+	
+	/**
+	 * Funkcja drawNextRow rysuje kolejny rządek. Sprawdza ona czy korzystamy z kolorów, jeśli tak
+	 * to wypełnia sbrow znakami BLOCK_SOLID i pierwszy ustala na BLOCK_SPARSE. W przeciwnym
+	 * wypadku wypełnia po prostu browy wartościami zero i pierwszymi literami/cyframi.
+	 * Potem wypełnia komponent one odpowiednim numerem tury i go wypisuje, a także wypełnia środkową
+	 * tablicę table odpowiednim elementem (brow lub sbrow).
+	 */
 	public void drawNextRow() {
 		if(SettingsContainer.ctype==2){
 			for(int j = 0; j < SettingsContainer.chars; ++j){
@@ -298,18 +449,30 @@ public class GameScreen extends Window {
 	}
 	
 	
-	//Ustalenie kodu do zgadniecia
+	/**
+	 * setRandomGoal to funkcja służąca do stworzenia kodu, który będziemy odgadywać. Powołuje ona
+	 * generator liczb pseudolosowych i wypełnia tablicę codes kolejnymi intami od 0 do 5.
+	 * 
+	 */
 	public void setRandomGoal(){
 		Random generator = new Random();
 		for (int i=0;i<SettingsContainer.chars;++i){
 			codes[i] = generator.nextInt(6);
 			
 		}
+		//Poniższe dwie linijki to DEBUG MODE. Zakomentować po skończeniu testów, lub wyrzucić.
 		tooltip = new Label(Arrays.toString(codes));
 		mainPanel.addComponent(tooltip);
 		
 	}
 	
+	/**
+	 * Funkcja sprawdzająca check_em na początku czyści zarówno zmienne określające ilość trafień
+	 * jak i treesety. Potem mamy rozgałęzienie - osobny kod jest wykonywany jeśli gramy na kolory
+	 * , osobny jak gramy na co innego. Różnica jest taka że korzystamy z pola value w SelectableButton
+	 * lub z tablicy colorValue. Jak coś idealnie pasuje, zwiększamy perfect_hits. Jak coś po prostu
+	 * się znajduje, ale nie na dobrym miejscu i nie jest perfect_hitem, to zwiększamy semi_hits.
+	 */
 	public void check_em(){
         perfect_hits = 0;
         semi_hits = 0;
@@ -353,7 +516,6 @@ public class GameScreen extends Window {
     		for(Integer val : codeTree){
     			if(inputTree.contains(val)){
     				semi_hits++;
-                    //System.out.println("Semi: " + val);
     			}
     		}
         }

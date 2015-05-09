@@ -9,10 +9,31 @@ import com.googlecode.lanterna.screen.ScreenWriter;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.swing.SwingTerminal;
 import com.googlecode.lanterna.input.Key.Kind;
+
+
+/**
+ * Klasa MasterMind to główna klasa, która zajmuje się początkowym uruchomieniem programu. Zawiera też deklaracje kilku zmiennych, które są kluczowe.
+ * @author Otoshigami
+ *
+ */
 public class MasterMind {
+	
+	/**
+	 * Pole terminal jest polem statycznym przez właściwości Lanterny. Odpowiada ono za terminal działający 'pod' interfejsem lanterny.
+	 */
 	static Terminal terminal;
+	
+	/**
+	 * Pole textGUI jest polem statycznym przez właściwośi Lanterny. Odpowiada ono za najwyższą warstwę - graficzną.
+	 */
 	static GUIScreen textGUI;
+	
+	/**
+	 * Pole screen jest polem statycznym przez właściwości Lanterny. Odpowiada ono za warstwę obrazu.
+	 */
 	static Screen screen;
+	
+	
 	public static void main(String[] args) {
 		terminal = new SwingTerminal();
 		screen = new Screen(terminal);
