@@ -44,7 +44,7 @@ public class GameScreen extends Window {
     	 * Konstruktor ColorControlera jest najzwyczajniejszym wywołaniem konstruktora guzika.
     	 * @param s	Napis, jaki chcemy żeby pokazał się na guziku.
     	 */
-        ColorControler(String s) {
+        public ColorControler(String s) {
             super(s);
         }
         
@@ -232,57 +232,57 @@ public class GameScreen extends Window {
 	/**
 	 * Panel mainPanel służy jako główny panel okna gry. W nim znajdują się wszystkie inne obiekty. Jego orientacja jest pionowa.
 	 */
-	Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
+	private Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
 	
 	/**
 	 * Panel tablePanel powstał w celu organizacji tablic, z których składa się okno gry. Jego orientacja jest pozioma.
 	 */
-	Panel tablePanel = new Panel(Panel.Orientation.HORISONTAL);
+	private Panel tablePanel = new Panel(Panel.Orientation.HORISONTAL);
 
 	/**
 	 * table to nasza główna tablica, która ma tyle kolumn ile wynosi zmienna chars w SettingsContainer. Przechowywać będzie Labele lub SelectableButtony.
 	 */
-	Table table = new Table(SettingsContainer.chars);
+	private Table table = new Table(SettingsContainer.chars);
 
 	/**
 	 * Lewa tablica, która przechowuje Labele z numerem tury. Ma tylko jedną kolumnę
 	 */
-	Table ltable = new Table(1);
+	private Table ltable = new Table(1);
 	
 	/**
 	 * Prawa tablica, która przechowuje Labele z podpowiedziami. Ma tylko jedną kolumnę.
 	 */
-	Table rtable = new Table(1);
+	private Table rtable = new Table(1);
 
 	/**
 	 * button row, w skrócie brow to tablica SelectableButtonów, która startuje z tyloma guzikami ile wynosi zmienna chars w SettingsContainerze.
 	 */
-	SelectableButton [] brow = new SelectableButton[SettingsContainer.chars];
+	private SelectableButton [] brow = new SelectableButton[SettingsContainer.chars];
 	
 	/**
 	 * special button row, w skrócie sbrow to tak naprawdę tablica przechowująca "fałszywe" guziki, czyli Labele. Tak jak w przypadku brow, startuje z tyloma etykietami ile wynosi zmienna chars.
 	 */
-	Label [] sbrow = new Label[SettingsContainer.chars];
+	private Label [] sbrow = new Label[SettingsContainer.chars];
 
 	/**
 	 * two jest pewnego rodzaju placeholderem, na którego miejsce będziemy wrzucać podpowiedzi.
 	 */
-	Component two = new Label("a");
+	private Component two = new Label("a");
 	
 	/**
 	 * invisible to nowy guzik - ColorControler. Nazywa się tak bo z zamiaru ma być niewidoczny.
 	 */
-	ColorControler invisible = new ColorControler("");
+	private ColorControler invisible = new ColorControler("");
 	
 	/**
 	 * Tablica colorValue to obejście tego, ze labele nie mogą mieć pola wartości. Dlatego właśnie tworzymy do nich pomocniczą tablicę, która będzie zawierała wartości liczbowe.
 	 */
-	int[] colorValue = new int[SettingsContainer.chars];
+	private int[] colorValue = new int[SettingsContainer.chars];
 
 	/**
 	 * tooltip mówi nam o opcjach, które powinny być zawsze wiadome. Jest to zwykły label.
 	 */
-	Component tooltip = new Label("Wciśnij klawisz 'Backspace' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
+	private Component tooltip = new Label("Wciśnij klawisz 'Backspace' aby wywołać monit pomocy. Wciśnij klawisz 'Escape' aby wyjść z gry");
 	
 	/**
 	 * Tablica intów codes to tablica na wylosowany kod, który mamy odgadnąć.
@@ -292,22 +292,22 @@ public class GameScreen extends Window {
 	/**
 	 * perfect_hits odpowiada liczbie elementów które trafiliśmy w stu procentach.
 	 */
-	public int perfect_hits = 0;
+	private int perfect_hits = 0;
 	
 	/**
 	 * semi_hits odpowiada liczbie elementów które mają dobry kolor, ale są na złym miejscu.
 	 */
-	public int semi_hits = 0;
+	private int semi_hits = 0;
 	
 	/**
 	 * inputTree jest TreeSetem dla wpisywanych przez nas wartości.
 	 */
-	public TreeSet<Integer> inputTree= new TreeSet<Integer>();
+	private TreeSet<Integer> inputTree= new TreeSet<Integer>();
 	
 	/**
 	 * codeTree jest treesetem dla wylosowanych wartości
 	 */
-	public TreeSet<Integer> codeTree = new TreeSet<Integer>();
+	private TreeSet<Integer> codeTree = new TreeSet<Integer>();
 	
 	/**
 	 * Konstruktor GameScreen robi wiele rzeczy, które sprawiają że gra działa. Przede wszystkim ustawia wszystkie panele tam gdzie trzeba

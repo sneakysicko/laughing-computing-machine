@@ -22,32 +22,32 @@ public class OptionsScreen extends Window {
 	/**
 	 *  Panel mainPanel służy jako główny panel okna. W nim znajdują się wszystkie inne obiekty. Jego orientacja jest pionowa.
 	 */
-	Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
+	private Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
 	
 	/**
 	 * Pomocniczy panel o orientacji poziomej
 	 */
-	Panel optionPanel = new Panel(Panel.Orientation.HORISONTAL);
+	private Panel optionPanel = new Panel(Panel.Orientation.HORISONTAL);
 	
 	/**
 	 * Panel do lewej grupy radio buttonów.
 	 */
-	Panel leftPanel = new Panel();
+	private Panel leftPanel = new Panel();
 	
 	/**
 	 * Panel do prawj grupy radio buttonów.
 	 */
-	Panel rightPanel = new Panel();
+	private Panel rightPanel = new Panel();
 	
 	/**
 	 * Lista radio buttonów po lewej
 	 */
-	RadioCheckBoxList option_left = new RadioCheckBoxList();
+	private RadioCheckBoxList option_left = new RadioCheckBoxList();
 	
 	/**
 	 * Lista radio buttonów po prawej.
 	 */
-	RadioCheckBoxList option_right = new RadioCheckBoxList();
+	private RadioCheckBoxList option_right = new RadioCheckBoxList();
 	
 	/**
 	 * Konstruktor domyślny okna OptionsScreen robi wszystko i nadaje odpowiednią funkcjonalność
