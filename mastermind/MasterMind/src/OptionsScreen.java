@@ -104,7 +104,11 @@ public class OptionsScreen extends Window {
 					boolean test = true;
 					while(test){
 						try{
-							int new_chars=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość znaków","Podaj ilość znaków od 4 (minimum) do " + SettingsContainer.charsLimit + " (maksimum)","5"));
+							int new_chars=5;
+							String temp = TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość znaków","Podaj ilość znaków od 4 (minimum) do " + SettingsContainer.charsLimit + " (maksimum)","5");
+							if(temp!=null){
+							new_chars=Integer.parseInt(temp);
+							}
 							if(new_chars>=4 && new_chars<=SettingsContainer.charsLimit){
 								test = false;
 								SettingsContainer.chars=new_chars;
@@ -119,7 +123,11 @@ public class OptionsScreen extends Window {
 					test = true;
 					while(test){
 						try{
-							int new_tries=Integer.parseInt(TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.triesLimit + " (maksimum)","10"));
+							int new_tries = 10;
+							String temp = TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.triesLimit + " (maksimum)","10");
+							if(temp!=null){
+							new_tries=Integer.parseInt(temp);
+							}
 							if(new_tries>=4 && new_tries<=SettingsContainer.triesLimit){
 								test = false;
 								SettingsContainer.tries=new_tries;
