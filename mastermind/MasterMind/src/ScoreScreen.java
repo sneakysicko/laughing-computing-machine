@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Set;
 
 import com.googlecode.lanterna.gui.Action;
 import com.googlecode.lanterna.gui.Border;
@@ -212,6 +213,7 @@ public class ScoreScreen extends Window {
 		public void doAction() {
 			SettingsContainer.currentComponent = 0;
 			SettingsContainer.win = false;
+			SettingsContainer.turnNumber = 0;
 			GameScreen game = new GameScreen();
            	MasterMind.textGUI.showWindow(game, GUIScreen.Position.CENTER);			
            	close();
@@ -226,6 +228,10 @@ public class ScoreScreen extends Window {
 		public void doAction() {
 			SettingsContainer.currentComponent = 0;
 			SettingsContainer.win = false;
+			SettingsContainer.tries = 0;
+			SettingsContainer.turnNumber = 0;
+			SettingsContainer.chars = 0;
+			SettingsContainer.ctype = 0;
 			
 			OptionsScreen options = new OptionsScreen();
 		    MasterMind.textGUI.showWindow(options, GUIScreen.Position.CENTER);
