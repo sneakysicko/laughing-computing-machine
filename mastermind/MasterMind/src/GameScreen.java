@@ -18,6 +18,7 @@ import com.googlecode.lanterna.gui.component.TextArea;
 import com.googlecode.lanterna.gui.dialog.MessageBox;
 import com.googlecode.lanterna.gui.layout.LinearLayout;
 import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.ACS;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.Key.Kind;
@@ -157,7 +158,10 @@ public class GameScreen extends Window {
 				check_em();
 				if(SettingsContainer.win == true){
 					close();
-				}
+					ScoreScreen score = new ScoreScreen();
+					MasterMind.textGUI.showWindow(score,GUIScreen.Position.CENTER);
+					
+				}				
 				two = new Label("B:" + perfect_hits + "W:" + semi_hits);
 				rtable.addRow(two);
 				++SettingsContainer.turnNumber;
@@ -401,12 +405,16 @@ public class GameScreen extends Window {
 					check_em();
 					if(SettingsContainer.win == true){
 						close();
+						ScoreScreen score = new ScoreScreen();
+							MasterMind.textGUI.showWindow(score,GUIScreen.Position.CENTER);
+							
 					}
 					two = new Label("B:" + perfect_hits + "W:" + semi_hits);
 					rtable.addRow(two);
 					++SettingsContainer.turnNumber;
 					if(SettingsContainer.turnNumber > SettingsContainer.tries)
 						close();
+						
 					else{
 						sbrow[SettingsContainer.currentComponent].setText(Character.toString(ACS.BLOCK_SOLID));
 						drawNextRow();

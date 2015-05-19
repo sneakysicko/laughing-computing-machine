@@ -43,4 +43,6 @@ public class SettingsContainer {
 	 * win jest zmienną która nam mówi czy gracz zwyciężył, czy nie. Ze względu na konstrukcję Lanterny lepszym rozwiązaniem jest zrobienie z tego statycznej zmiennej, żeby GameScreen mógł komunikować się ze ScoreScreenem.
 	 */
 	public static boolean win = false;
+	
+
 }
