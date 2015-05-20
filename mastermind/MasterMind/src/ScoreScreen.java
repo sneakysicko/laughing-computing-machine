@@ -31,7 +31,6 @@ import com.googlecode.lanterna.gui.dialog.TextInputDialog;
 import com.googlecode.lanterna.gui.layout.LinearLayout;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.Terminal;
-import com.sun.xml.internal.bind.v2.model.annotation.Quick;
 
 public class ScoreScreen extends Window {
 	private Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
