@@ -149,13 +149,13 @@ public class GameScreen extends Window {
 		 */
 		private Action defaultAction = new Action() {
 			/**
-			 * Funkcja doAction wywołuje funkcję check_em, a potem sprawdza czy zmienna win w SettingsContainer jest true. Jeśli tak, to przechodzimy do ScoreScreena (wygrana).
+			 * Funkcja doAction wywołuje funkcję checkValues, a potem sprawdza czy zmienna win w SettingsContainer jest true. Jeśli tak, to przechodzimy do ScoreScreena (wygrana).
 			 * Jeśli nie, to tworzymy nowy Label zawierający podpowiedzi jak dobry był nasz traf i dodajemy go do tablicy rtable.
 			 * Potem zwiększa turę i sprawdza czy już skończyliśmy. Jeśli tak to także przechodzimy do ScoreScreena. 
 			 * W przeciwnym wypadku wywołujemy funkcję drawNextRow, ustalamy fokus na pierwszy guzik i odpowiednio zmieniamy currentComponent na zero.
 			 */
 			public void doAction() {
-				check_em();
+				checkValues();
 				if(SettingsContainer.win == true){
 					close();
 					ScoreScreen score = new ScoreScreen();
@@ -402,7 +402,7 @@ public class GameScreen extends Window {
 
 				@Override
 				public void doAction() {
-					check_em();
+					checkValues();
 					if(SettingsContainer.win == true){
 						close();
 						ScoreScreen score = new ScoreScreen();
@@ -475,13 +475,13 @@ public class GameScreen extends Window {
 	}
 	
 	/**
-	 * Funkcja sprawdzająca check_em na początku czyści zarówno zmienne określające ilość trafień
+	 * Funkcja sprawdzająca checkValues na początku czyści zarówno zmienne określające ilość trafień
 	 * jak i treesety. Potem mamy rozgałęzienie - osobny kod jest wykonywany jeśli gramy na kolory
 	 * , osobny jak gramy na co innego. Różnica jest taka że korzystamy z pola value w SelectableButton
 	 * lub z tablicy colorValue. Jak coś idealnie pasuje, zwiększamy perfect_hits. Jak coś po prostu
 	 * się znajduje, ale nie na dobrym miejscu i nie jest perfect_hitem, to zwiększamy semi_hits.
 	 */
-	public void check_em(){
+	public void checkValues(){
         perfect_hits = 0;
         semi_hits = 0;
         codeTree.clear();
@@ -503,7 +503,7 @@ public class GameScreen extends Window {
 		for(Integer val : codeTree){
 			if(inputTree.contains(val)){
 				semi_hits++;
-                System.out.println("Semi: " + val);
+                //System.out.println("Semi: " + val);
 			}
 		}
         }
