@@ -31,3 +31,9 @@ local.properties
 
 # PDT-specific
 .buildpath
+/mastermind/MasterMind/nbproject/private/
+
+#Netbeans
+nbproject/
+manifest.mf
+build.xml
