@@ -39,3 +39,4 @@ manifest.mf
 build.xml
 UMLDiagrams/
 /mastermind/MasterMind/build/
+*.iml
