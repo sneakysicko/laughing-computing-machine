@@ -165,8 +165,10 @@ public class GameScreen extends Window {
 				two = new Label("B:" + perfect_hits + "W:" + semi_hits);
 				rtable.addRow(two);
 				++SettingsContainer.turnNumber;
-				if(SettingsContainer.turnNumber > SettingsContainer.tries)
+				if(SettingsContainer.turnNumber > SettingsContainer.tries){
 					close();
+					ScoreScreen score = new ScoreScreen();
+					MasterMind.textGUI.showWindow(score,GUIScreen.Position.CENTER);}
 				else
 					drawNextRow();
 				setFocus(brow[0]);
@@ -412,9 +414,11 @@ public class GameScreen extends Window {
 					two = new Label("B:" + perfect_hits + "W:" + semi_hits);
 					rtable.addRow(two);
 					++SettingsContainer.turnNumber;
-					if(SettingsContainer.turnNumber > SettingsContainer.tries)
+					if(SettingsContainer.turnNumber > SettingsContainer.tries){
 						close();
-						
+						ScoreScreen score = new ScoreScreen();
+						MasterMind.textGUI.showWindow(score,GUIScreen.Position.CENTER);
+					}
 					else{
 						sbrow[SettingsContainer.currentComponent].setText(Character.toString(ACS.BLOCK_SOLID));
 						drawNextRow();

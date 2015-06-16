@@ -116,7 +116,6 @@ public class OptionsScreen extends Window {
 								MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co wykracza poza zakres");
 							}
 						}catch(NumberFormatException nfe){
-							MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co nie jest liczbą");
 						}
 
 					}
@@ -128,14 +127,13 @@ public class OptionsScreen extends Window {
 							if(temp!=null){
 							new_tries=Integer.parseInt(temp);
 							}
-							if(new_tries>=4 && new_tries<=SettingsContainer.triesLimit){
+							if(new_tries>=5 && new_tries<=SettingsContainer.triesLimit){
 								test = false;
 								SettingsContainer.tries=new_tries;
 							}else{
 								MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co wykracza poza zakres");
 							}
 						}catch(NumberFormatException nfe){
-							MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co nie jest liczbą");
 						}
 					}
 				}
