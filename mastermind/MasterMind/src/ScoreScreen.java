@@ -32,6 +32,11 @@ import com.googlecode.lanterna.gui.layout.LinearLayout;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.terminal.Terminal;
 
+/**
+ * ScoreScreen zajmuje się tym co wyswietlane jest po skonczeniu gry
+ * Pyta gracza czy chce zapisać się do tablicy wyników, obsługuje jego odczytywanie i zapis
+ * Pyta gracza czy chce rozpocząć nową rozgrywkę - jesli tak to z jakimi ustawieniami
+ */
 public class ScoreScreen extends Window {
 	private Panel mainPanel = new Panel(Panel.Orientation.VERTICAL);
 	private Panel tablePanel = new Panel(Panel.Orientation.HORISONTAL);
