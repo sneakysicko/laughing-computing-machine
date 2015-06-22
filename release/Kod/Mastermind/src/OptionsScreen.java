@@ -105,7 +105,7 @@ public class OptionsScreen extends Window {
 					while(test){
 						try{
 							int new_chars=5;
-							String temp = TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość znaków","Podaj ilość znaków od 4 (minimum) do " + SettingsContainer.charsLimit + " (maksimum)","5");
+							String temp = TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość znaków","Podaj ilość znaków od 4 (minimum) do " + SettingsContainer.charsLimit + " (maksimum). Przycisk Cancel daje wartości domyślne.","5");
 							if(temp!=null){
 							new_chars=Integer.parseInt(temp);
 							}
@@ -116,6 +116,7 @@ public class OptionsScreen extends Window {
 								MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co wykracza poza zakres");
 							}
 						}catch(NumberFormatException nfe){
+							MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co nie jest poprawną liczbą całkowitą");
 						}
 
 					}
@@ -123,7 +124,7 @@ public class OptionsScreen extends Window {
 					while(test){
 						try{
 							int new_tries = 10;
-							String temp = TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.triesLimit + " (maksimum)","10");
+							String temp = TextInputDialog.showTextInputBox(getOwner(),"Podaj ilość prób","Podaj ilość prób od 5 (minimum) do " + SettingsContainer.triesLimit + " (maksimum). Przycisk Cancel daje wartości domyślne.","10");
 							if(temp!=null){
 							new_tries=Integer.parseInt(temp);
 							}
@@ -134,6 +135,7 @@ public class OptionsScreen extends Window {
 								MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co wykracza poza zakres");
 							}
 						}catch(NumberFormatException nfe){
+							MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono coś co nie jest poprawną liczbą całkowitą");
 						}
 					}
 				}

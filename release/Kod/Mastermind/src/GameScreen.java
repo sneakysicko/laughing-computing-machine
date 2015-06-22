@@ -472,9 +472,7 @@ public class GameScreen extends Window {
 			codes[i] = generator.nextInt(6);
 			
 		}
-		//Poniższe dwie linijki to DEBUG MODE. Zakomentować po skończeniu testów, lub wyrzucić.
-		//tooltip = new Label(Arrays.toString(codes));
-		//mainPanel.addComponent(tooltip);
+		
 		
 	}
 	
