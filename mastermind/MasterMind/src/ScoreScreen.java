@@ -99,7 +99,7 @@ public class ScoreScreen extends Window {
 			while(true){
 				
 					 nickname=(TextInputDialog.showTextInputBox(getOwner(),"Podaj swój nick(max 10 znaków)","Nick",null));
-					if(nickname.length()>10 || nickname.isEmpty()){
+					if(nickname == null || nickname.length()>10){
 						MessageBox.showMessageBox(getOwner(),"Błąd","Wprowadzono niepoprawną nazwę!");
 						
 						
